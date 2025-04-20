@@ -1,0 +1,153 @@
+<div class="container-fluid mt-4">
+  <div class="row">
+    <div class="col-2 bg-secondary p-3">
+      <button (click)="showProducts()" class="btn btn-dark w-100 mb-2">Productos</button>
+      <button (click)="showPurchases()" class="btn btn-dark w-100">Compras</button>
+    </div>
+    <div class="col-10">
+      <!-- Mensaje por defecto cuando ninguna vista está seleccionada -->
+      <div *ngIf="!view" class="white-box">
+        <h3 class="text-center">Bienvenido al Panel de Administración</h3>
+        <p class="text-center">Selecciona una opción para comenzar.</p>
+      </div>
+
+      <section *ngIf="view === 'productos'" id="productos" class="mt-5">
+        <div class="d-flex justify-content-between mb-3">
+          <button class="btn btn-success" (click)="showProductForm()">
+            <i class="fa fa-plus"></i> Agregar Producto
+          </button>
+          
+        </div>
+        <div class="col-12 mt-5">
+          <table class="table table-bordered table-striped table-light">
+            <thead >
+              <tr>
+                <th>Producto</th>
+                <th>Foto</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="productos-list">
+              <ng-container *ngFor="let producto of products()"> 
+                <tr> 
+                  <td id="nombre_producto">{{ producto.nombre_producto }}</td>
+                  <td><img [src]="producto.main_imagen" height="50" alt="Imagen del producto"></td>
+                  <td id="descripcion">{{ producto.descripcion }}</td>
+                  <td id="precio">{{ producto.precio }}</td>
+                  <td>
+                    <!-- Botón de Visibilidad -->
+                    <button (click)="toggleVisibility(producto)" class="btn btn-sm" title="Visibilidad">
+                      <i class="fa-solid" [ngClass]="producto.visible ? 'fa-eye' : 'fa-eye-slash'"></i>
+                    </button>
+            
+                    <!-- Botón de Editar -->
+                    <button (click)="editProduct(producto)" class="btn btn-sm" title="Editar">
+                      <i class="fa-solid fa-pencil"></i>
+                    </button>
+            
+                    <!-- Botón de Eliminar -->
+                    <button (click)="borrarData($event, producto.id_producto)" class="btn btn-sm" title="Eliminar">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="showForm" class="container-fluid bg-secondary bg-opacity-50 w-100 p-3">
+          <div class="main row justify-content-center">
+            <h2>{{ editMode ? 'Editar Producto' : 'Crear Producto' }}</h2>
+            <form [formGroup]="form" (submit)="onEnviar($event)" id="productos-form" class="row justify-content-center mb-4" autocomplete="off">
+              <div class="col-10 mb-3">
+                <label for="name">Nombre del producto</label>
+                <input type="text" formControlName="nombre_producto" id="nombre" class="form-control" placeholder="Ingresa el nombre del producto nuevo">
+              </div>
+              <div class="col-10 mb-2">
+                <label for="main_imagen">Foto del producto</label><br>
+                <input type="file" (change)="onFileSelected($event)" class="form-control-file" id="main_imagen">
+              </div>
+              <div class="col-10 mb-3">
+                <label for="description">Descripción</label>
+                <textarea class="form-control" formControlName="descripcion" id="descripcion" rows="3"></textarea>
+              </div>
+              <div class="col-10 mb-3">
+                <label for="price">Price</label>
+                <input type="text" formControlName="precio" id="price" class="form-control" placeholder="Por Ejm: 2550">
+              </div>
+              <div class="col-12 col-md-10 text-end">
+                
+                <button type="submit" class="btn btn-dark add-btn">
+                <i class="fa fa-plus"></i> {{ editMode ? 'Editar' : 'Añadir nuevo' }}
+                </button>
+
+                <button type="button" class="btn btn-dark" (click)="closeForm()">
+                  <i class="fa fa-times"></i> Cerrar
+                </button>
+
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!--aqui comienza la seccion del boton compras-->
+      <section *ngIf="view === 'compras'" id="compras" class="mt-5">
+        <div class="d-flex gap-3 mb-3">
+          <input type="text" class="form-control" [(ngModel)]="filtroUsuario" placeholder="Buscar por usuario">
+          <input type="text" class="form-control" [(ngModel)]="filtroProducto" placeholder="Buscar por producto">
+          <input type="date" class="form-control" [(ngModel)]="filtroFecha">
+        </div>
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+              <span>Historial de todas las Compras realizadas en la Tienda</span>
+              <button class="btn btn-light btn-sm" (click)="exportarExcel()">📥 </button>
+            </div>
+            <div class="card-body">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Usuario</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Fecha</th>
+                    <th>Precio</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let compra of getCompra">
+                    <tr *ngFor="let detalle of compra.detalles"
+                        [hidden]="!cumpleFiltro(compra, detalle)">
+                      <td>
+                        {{ compra.user_first_name ? (compra.user_first_name + ' ' + compra.user_last_name) : 'Usuario no asignado' }}
+                      </td>
+                      <td>
+                        {{ detalle.nombre_producto || 'Producto no disponible' }}
+                      </td>
+                      <td>
+                        {{ detalle.cantidad }}
+                      </td>
+                      <td>
+                        {{ compra.fecha || 'Fecha no disponible' }}
+                      </td>
+                      <td>
+                        {{ detalle.precio_calculado }}
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+                <!-- Mensaje si no hay compras -->
+                <div *ngIf="!getCompra || getCompra.length === 0">
+                  <p>No hay compras disponibles.</p>
+                </div>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div> 
+  </div>
+</div>

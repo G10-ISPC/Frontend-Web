@@ -1,0 +1,25 @@
+            <!-- TEMPLATE DONDE SE VE LA CARGA DE PRODUCTOS Y PRECIO-->
+@if (item) {
+    <div class="items-container">
+
+        <div class="item">
+            <img [src]="item.main_imagen" [alt]="item.nombre_producto" class="image" />
+            <div>        
+                <div class="name"> <strong> {{ item.nombre_producto }}</strong></div>
+                <div class="price"> <strong> ${{ item.precio }} </strong></div>
+            </div>
+        </div>
+                            
+        <section class="controls">
+                            
+            <i class="fa-solid fa-trash" (click)="onRemoveItem()"></i>
+                                
+            <app-amount-adjuster
+                [quantity]="item.quantity"
+                (quantityChange)="onQuantityChange($event)">
+            </app-amount-adjuster>
+                            
+        </section>
+    </div>
+}
+

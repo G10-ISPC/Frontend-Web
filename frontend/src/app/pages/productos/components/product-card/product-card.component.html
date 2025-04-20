@@ -1,0 +1,19 @@
+<!-- TEMPLATE QUE CARGA LOS DATOS DE DE LAS TARJETAS -->
+<div class="card__father">
+    <div class="card" id="product1">
+      <div class="card__front" [ngStyle]="{ 'background-image': 'url(' + imageUrl + ')' }">
+
+        <div class="bg"></div>
+        <div class="body__card_front">
+          <h2 class="name">{{ product.nombre_producto }}</h2>
+        </div>
+      </div>
+      <div class="card__back">
+        <div class="body__card_back">
+          <p class="description">{{ product.descripcion }}</p>
+          <p class="price">${{ product.precio | decimalFormat }}</p>
+          <button class="button link" (click)="onAdd(product)">Comprar</button>
+        </div>
+      </div>
+    </div>
+  </div>

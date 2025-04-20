@@ -1,0 +1,51 @@
+<main class="bg-dark text-light"> 
+  <!-- Nuestra historia -->
+  <div class="container py-5">
+    <div class="text-center mb-4">
+      <h1 class="display-4 text-warning">Nosotros</h1>
+      <p class="lead text-secondary">Nuestra historia</p>
+    </div>
+    <div class="row align-items-center justify-content-center">
+      <div class="col-lg-6 mb-4">
+        <p class="text-light fs-5">
+          Ricco Burgers nació del fanatismo de un grupo de amigos por las hamburguesas. Nuestra pasión por probar, comparar y debatir cada burger nos llevó a crear una propuesta que combina lo mejor de todos los mundos: variedad, sabor y mucha actitud. <br /><br />
+          Antes de ser creadores, fuimos consumidores. Y sabemos que cuando pedís una hamburguesa, querés tres cosas: que sea <span class="text-warning">RICA, GRANDE y ECONÓMICA.</span> Eso es Ricco Burgers. Nada más. Nada menos.
+        </p>
+      </div>
+      <div class="col-lg-5 mb-4">
+        <img class="img-fluid rounded-pill img-zoom" src="../../../assets/img/amigos.jpg" alt="foto de amigos" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Nuestro equipo -->
+  <section id="team" class="py-5">
+    <div class="container text-center text-light mb-5">
+      <h2 class="display-5 text-warning">Nuestro equipo</h2>
+    </div>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div *ngFor="let developer of developerList; trackBy: trackById" class="col-xl-3 col-md-4 col-sm-6 mb-5 px-3">
+          <div class="card card-dev-custom h-100 text-center p-4">
+            <img [src]="developer.fotoUrl" alt="{{ developer.name }}" class="card-img-top rounded-circle mx-auto border border-warning shadow-sm" width="100" />
+            <div class="card-body">
+              <h5 class="card-title text-warning">{{ developer.name }}</h5>
+              <p class="card-text">{{ developer.rol }}</p>
+              <div class="d-flex justify-content-center gap-2 mt-3">
+                <a [href]="developer.redesSociales.linkedin" target="_blank" class="social-link">
+                  <i class="fa fa-linkedin"></i>
+                </a>
+                <a [href]="developer.redesSociales.github" target="_blank" class="social-link">
+                  <i class="fa-brands fa-github"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+            

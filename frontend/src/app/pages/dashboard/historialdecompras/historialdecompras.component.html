@@ -1,0 +1,37 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            Historial de Compras
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Fecha</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Itera sobre las compras -->
+                    <ng-container *ngFor="let compra of getCompra">                       
+                        <tr *ngFor="let detalle of compra.detalles">                            
+                            <td>{{ detalle.nombre_producto || 'Producto no disponible' }}</td>                            
+                            <td>{{ detalle.cantidad }}</td>                            
+                            <td>{{ compra.fecha || 'Fecha no disponible' }}</td>                           
+                            <td>{{ detalle.precio_calculado }}</td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+                <!-- Mensaje si no hay detalles -->
+                <div *ngIf="!getCompra || getCompra.length === 0">
+                    <p>No hay compras disponibles.</p>
+                </div>
+            </table>
+        </div>
+    </div>
+</div>
