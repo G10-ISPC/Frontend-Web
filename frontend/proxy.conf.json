@@ -1,0 +1,16 @@
+{
+    "/api/*": {
+      "target": "http://127.0.0.1:8000",
+      "secure": false,
+      "logLevel": "debug"
+    },
+    "/mis-compras": {
+      "target": "http://127.0.0.1:8000",
+      "secure": false,
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/mis-compras": "/mis-compras"
+      },
+      "logLevel": "debug"
+    }
+  }

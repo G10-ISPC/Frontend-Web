@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-black">
+  <div class="container-fluid">
+    <a class="nav-link d-flex align-items-center" routerLink="/home">
+      <img class="icon" src="../../../assets/img/logo1.ico" alt="Ricco"class="logo me-2">
+      <span *ngIf="isUserLogin$ | async" class="nav-link text-light">{{ firstName }} {{lastName}}</span> <!--16/01/25, muestra nombre usuario -->
+      <span *ngIf="isAdmin$ | async" class="nav-link text-light">  - (Admin)</span>
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarnavaltmarkup"
+      aria-controls="navbarnavaltmarkup"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end text-center" id="navbarnavaltmarkup">
+      <div class="navbar-nav">
+        <a class="nav-link text-light" routerLink="/home">Home</a>
+        <a class="nav-link text-light" routerLink="/nosotros">Nosotros</a>
+        <a class="nav-link text-light" routerLink="/contacto">Contacto</a>
+        <a *ngIf="isUserLogin$ | async" class="nav-link text-light" routerLink="/productos">Productos</a>
+        <a  *ngIf="(isUserLogin$ | async) && !(isAdmin$ | async)" class="nav-link text-light" routerLink="/dashboard">Mis Compras</a>
+        <a  *ngIf="(isAdmin$ | async)" class="nav-link text-light" routerLink="/admin">Dashboard Admin</a>
+        <a  *ngIf="!(isUserLogin$ | async)" class="nav-link text-light" routerLink="/login">Inicio Sesion</a>
+        <a  *ngIf="isUserLogin$ | async"class="nav-link text-light" role="button" (click)="logout()">Salida</a>
+        
+        
+        
+      </div>
+    </div>
+  </div>
+</nav>
+

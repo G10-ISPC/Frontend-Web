@@ -1,0 +1,10 @@
+<!-- TEMPLATE DONDE VAN LAS TARJETAS -->
+
+<section class="container__card">
+  @for (product of products; track product.id_producto) {
+  <app-product-card
+    [product]="product"
+    (add)="onAdd(product)"
+  ></app-product-card>
+  }
+</section>
