@@ -1,0 +1,100 @@
+/* Fondo oscuro general */
+.bg-dark {
+    background-color: #121212 !important;
+  }
+  
+  /* Imagen con efecto zoom */
+  .img-zoom {
+    transition: transform 0.5s ease;
+    cursor: pointer;
+  }
+  .img-zoom:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Sección de equipo con gradiente */
+  #team {
+    background: linear-gradient(to top, #1e1e1e, #121212);
+    color: #ffffff;
+  }
+  
+  /* Social icons */
+  .social-link {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: 1px solid #ffcc00;
+    color: #ffcc00;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out;
+    font-size: 0.85rem;
+  }
+  .social-link:hover {
+    background-color: #ffcc00;
+    color: #121212;
+    transform: scale(1.1);
+    text-decoration: none;
+  }
+  
+  /* === Cards de desarrolladores === */
+  .card-dev-custom {
+    background-color: #1a1a1a;
+    border: none;
+    border-radius: 15px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    padding: 1.25rem;
+    height: 100%;
+    text-align: center;
+  }
+  
+  .card-dev-custom:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(255, 204, 0, 0.4);
+  }
+  
+  .card-dev-custom .card-title {
+    color: #ffffff;
+    font-weight: bold;
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+  }
+  
+  .card-dev-custom:hover .card-title {
+    color: #ffcc00;
+  }
+  
+  .card-dev-custom .card-text {
+    color: #cccccc;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Imagen circular */
+  .card-dev-custom .card-img-top {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #ffcc00;
+    box-shadow: 0 0 5px rgba(255, 204, 0, 0.3);
+  }
+  .card-img-top:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+  }
+  
+  
+  .text-warning {
+    color: #ffcc00 !important;
+  }
+  .text-secondary {
+    color: #aaaaaa !important;
+  }
+  

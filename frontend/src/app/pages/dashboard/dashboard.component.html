@@ -1,0 +1,32 @@
+<div class="d-flex h-100">
+ 
+  <aside class="d-flex flex-column p-3 border-end" style="min-width: 200px;">
+    <button class="btn mb-2 btn-outline-primary" 
+            [ngClass]="{ 'active': showPerfil }"
+            (click)="showPerfilComponent()">
+      👤 Perfil
+    </button>
+    <button class="btn btn-outline-secondary"
+            [ngClass]="{ 'active': showHistorial }"
+            (click)="showHistorialComponent()">
+      🧾 Historial
+    </button>
+  </aside>
+
+  <main class="flex-grow-1 p-4">
+    
+    <ng-container *ngIf="!showPerfil && !showHistorial">
+      <div class="text-center mt-5">
+        <h2>¡Bienvenido, {{ firstName }}!</h2>
+        <p class="text-muted">Seleccioná una opción del menú lateral para comenzar.</p>
+      </div>
+    </ng-container>
+    
+    <app-perfil-usuario *ngIf="showPerfil"></app-perfil-usuario>
+    <app-historialdecompras *ngIf="showHistorial"></app-historialdecompras>
+  </main>
+</div>
+
+
+
+

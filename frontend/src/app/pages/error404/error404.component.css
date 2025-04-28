@@ -1,0 +1,71 @@
+body {
+    background-color: black;
+    font-family: 'Nunito', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    
+    background-image: url('../../../assets/img/f.png'); 
+    background-size: cover;
+    background-position: center;
+}
+
+.container {
+    text-align: center;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.43);
+    background: rgba(0, 0, 0, 0.369);
+    backdrop-filter: blur(10px);
+}
+
+h1 {
+    font-size: 8rem;
+    margin: 0;
+    color: #F12C3E;
+    color: black;
+    color: #fefefe;
+
+}
+
+h1 span {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+h1 img {
+    width: 1em;  /*Ajusta imagen ssegún sea necesario*/
+    height: auto;
+    padding-bottom: .4rem;
+}
+
+p {
+    font-size: 1.5rem;
+    color: black;
+    color: #fefefe;
+    font-weight: 600;
+}
+
+.button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: black;
+    background-color: #363636;
+    background-color: #F12C3E;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.5s ease;
+}
+
+.button:hover {
+    background-color: #ff4c4c;
+    background-color: #2d2d2d;
+    background-color: black;
+}
