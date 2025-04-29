@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Product } from '../../../../shared/interfaces/products.data';
-import { TruncatePipe } from '../../../../shared/pipes/truncate.pipe';
+import { Product } from '../../../../core/interfaces/producto';
+import { TruncatePipe } from '../../../../core/pipes/truncate.pipe';
 import { CommonModule } from '@angular/common';
 import { CartComponent } from '../../../cart/cart.component';
 import { CartService } from '../../../../core/services/cart.service';
-import { DecimalFormatPipe } from '../../../../shared/pipes/decimal-format.pipe';
+import { DecimalFormatPipe } from '../../../../core/pipes/decimal-format.pipe';
 
 @Component({
   selector: 'app-product-card',

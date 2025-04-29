@@ -1,20 +1,18 @@
-// registro.component.ts
+
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { usuario } from '../../shared/interfaces/usuario';
-import { RegistroService } from '../../core/services/registro.service';
+import { usuario } from '../../../core/interfaces/usuario';
+import { RegistroService } from '../../../core/services/registro.service';
 
 const letrasPattern = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ]*$/;
-const addressPattern = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9\s,'-]*$/;
 const phonePattern = /^\d{10,15}$/;
-const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()\-_=+{};:,<.>])[A-Za-z0-9!@#$%^&*()\-_=+{};:,<.>]{8,}$/; // Actualizado para incluir caracteres especiales
-const numberPattern = /^[0-9]*$/; // Validación de números
+const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()\-_=+{};:,<.>])[A-Za-z0-9!@#$%^&*()\-_=+{};:,<.>]{8,}$/; 
 
-// Validación personalizada para que las contraseñas coincidan
+
 export function passwordMatchValidator(password: string, confirmPassword: string): ValidatorFn {
   return (formGroup: AbstractControl): ValidationErrors | null => {
     const passwordControl = formGroup.get(password);
@@ -53,11 +51,7 @@ export class RegistroComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       first_name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern(letrasPattern)]),
       last_name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern(letrasPattern)]),
-      telefono: new FormControl('', [Validators.required, Validators.pattern(phonePattern)]),
-      direccion: this.formBuilder.group({
-        calle: new FormControl('', [Validators.required, Validators.pattern(addressPattern)]),
-        numero: new FormControl('', [Validators.required, Validators.pattern(numberPattern)])
-      })
+      telefono: new FormControl('', [Validators.required, Validators.pattern(phonePattern)]),      
     }, { validators: passwordMatchValidator('password', 'password2') });
   }
 
@@ -67,9 +61,7 @@ export class RegistroComponent {
   get first_name() { return this.formRegister.get('first_name') as FormControl; }
   get last_name() { return this.formRegister.get('last_name') as FormControl; }
   get telefono() { return this.formRegister.get('telefono') as FormControl; }
-  get direccion() { return this.formRegister.get('direccion') as FormControl; }
-  get calle() { return this.direccion.get('calle') as FormControl; }
-  get numero() { return this.direccion.get('numero') as FormControl; }
+
 
   registrarUsuario() {
     if (this.formRegister.invalid) {
@@ -84,10 +76,7 @@ export class RegistroComponent {
       first_name: this.formRegister.value.first_name,
       last_name: this.formRegister.value.last_name,
       telefono: this.formRegister.value.telefono,
-      direccion: {
-        calle: this.formRegister.value.direccion.calle,
-        numero: this.formRegister.value.direccion.numero,
-      },
+      username: ''
     };
 
     this.registroService.registrarUsuario(objeto).subscribe({

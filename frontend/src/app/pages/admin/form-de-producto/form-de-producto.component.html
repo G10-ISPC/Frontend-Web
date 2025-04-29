@@ -1,0 +1,84 @@
+<div class="d-flex justify-content-end align-items-center mb-4">
+  <button class="btn btn-agregar-producto" (click)="showProductForm()">
+    <i class="fa fa-plus"></i> Agregar Producto
+  </button>
+</div>
+
+<div class="col-12">
+  <div class="table-responsive">
+    <table class="table table-dark table-striped table-hover rounded shadow-sm overflow-hidden">
+      <thead class="thead-light">
+        <tr>
+          <th>Producto</th>
+          <th>Foto</th>
+          <th>Descripción</th>
+          <th>Precio</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="productos-list">
+        <ng-container *ngFor="let producto of products()">
+          <tr>
+            <td>{{ producto.nombre_producto }}</td>
+            <td>
+              <img [src]="producto.main_imagen" height="50" alt="Imagen del producto" class="rounded shadow-sm">
+            </td>
+            <td>{{ producto.descripcion }}</td>
+            <td>{{ producto.precio }}</td>
+            <td>
+              <button (click)="toggleVisibility(producto)" class="btn btn-sm btn-outline-light me-1" title="Visibilidad">
+                <i class="fa-solid" [ngClass]="producto.visible ? 'fa-eye' : 'fa-eye-slash'"></i>
+              </button>
+
+              <button (click)="editProduct(producto)" class="btn btn-sm btn-outline-warning me-1" title="Editar">
+                <i class="fa-solid fa-pencil"></i>
+              </button>
+
+              <button (click)="borrarData($event, producto.id_producto)" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div *ngIf="showForm" class="container-fluid bg-dark bg-opacity-75 p-4 mt-5 rounded shadow-lg">
+  <div class="row justify-content-center">
+    <h2 class="text-light mb-4">{{ editMode ? 'Editar Producto' : 'Crear Producto' }}</h2>
+
+    <form [formGroup]="form" (submit)="onEnviar($event)" id="productos-form" class="row justify-content-center g-3" autocomplete="off">
+      
+      <div class="col-12 col-md-8">
+        <label for="name" class="form-label text-light">Nombre del producto</label>
+        <input type="text" formControlName="nombre_producto" id="nombre" class="form-control bg-secondary text-light border-0" placeholder="Ingresa el nombre del producto nuevo">
+      </div>
+
+      <div class="col-12 col-md-8">
+        <label for="main_imagen" class="form-label text-light">Foto del producto</label><br>
+        <input type="file" (change)="onFileSelected($event)" class="form-control bg-secondary text-light border-0" id="main_imagen">
+      </div>
+
+      <div class="col-12 col-md-8">
+        <label for="description" class="form-label text-light">Descripción</label>
+        <textarea class="form-control bg-secondary text-light border-0" formControlName="descripcion" id="descripcion" rows="3"></textarea>
+      </div>
+
+      <div class="col-12 col-md-8">
+        <label for="price" class="form-label text-light">Precio</label>
+        <input type="text" formControlName="precio" id="price" class="form-control bg-secondary text-light border-0" placeholder="Por Ejm: 2550">
+      </div>
+
+      <div class="col-12 col-md-8 d-flex justify-content-end gap-2">
+        <button type="submit" class="btn btn-outline-light">
+          <i class="fa fa-plus"></i> {{ editMode ? 'Editar' : 'Añadir nuevo' }}
+        </button>
+        <button type="button" class="btn btn-outline-danger" (click)="closeForm()">
+          <i class="fa fa-times"></i> Cerrar
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

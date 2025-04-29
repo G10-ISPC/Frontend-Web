@@ -1,0 +1,43 @@
+<div class="compras-section">
+  <div class="filters mb-4 d-flex gap-3">
+    <input type="text" class="form-control dark-input" [(ngModel)]="filtroUsuario" (input)="filtrarCompras()" placeholder="Buscar por usuario">
+    <input type="text" class="form-control dark-input" [(ngModel)]="filtroProducto" (input)="filtrarCompras()" placeholder="Buscar por producto">
+    <input type="date" class="form-control dark-input" [(ngModel)]="filtroFecha" (change)="filtrarCompras()">
+  </div>
+
+  <div class="card dark-card">
+    <div class="card-header d-flex justify-content-between align-items-center bg-dark text-white">
+      <h5>Historial de Compras</h5>
+      <button class="btn btn-yellow btn-sm" (click)="exportarExcel()">📥 Exportar</button>
+    </div>
+    <div class="card-body">
+      <table class="table table-dark table-hover">
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Fecha</th>
+            <th>Precio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let compra of comprasFiltradas.length ? comprasFiltradas : getCompra">
+            <tr *ngFor="let detalle of compra.detalles">
+              <td>{{ compra.user_first_name ? (compra.user_first_name + ' ' + compra.user_last_name) : 'Usuario no asignado' }}</td>
+              <td>{{ detalle.nombre_producto || 'Producto no disponible' }}</td>
+              <td>{{ detalle.cantidad }}</td>
+              <td>{{ compra.fecha ? (compra.fecha | date: 'yyyy-MM-dd') : 'Fecha no disponible' }}</td>
+              <td>{{ detalle.precio_calculado }}</td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+
+      <div *ngIf="!getCompra || getCompra.length === 0" class="text-center mt-4">
+        <p>No hay compras disponibles.</p>
+      </div>
+    </div>
+  </div>
+</div>
+

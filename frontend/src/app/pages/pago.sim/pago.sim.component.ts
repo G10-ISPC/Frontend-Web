@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Asegúrate de importar FormsModule
-import { CartService, CartItem } from '../../core/services/cart.service';
+import { FormsModule } from '@angular/forms'; 
+import { CartService } from '../../core/services/cart.service';
+import { CartItem } from '../../core/interfaces/cart';
 import { HttpClient } from '@angular/common/http';
-import { Compra } from '../../shared/interfaces/compra';
-import { DecimalFormatPipe } from '../../shared/pipes/decimal-format.pipe';
-import { Pedido } from '../../shared/interfaces/pedido';
+import { Compra } from '../../core/interfaces/compra';
+import { Pedido } from '../../core/interfaces/pedido';
 import { forkJoin } from 'rxjs';
 import { PedidosService } from '../../core/services/pedidos.service';
 import { LogService } from '../../core/services/log.service';
@@ -13,7 +13,7 @@ import { LogService } from '../../core/services/log.service';
 @Component({
   selector: 'app-pago-sim',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Asegúrate de agregar FormsModule
+  imports: [CommonModule, FormsModule], 
   templateUrl: './pago.sim.component.html',
   styleUrls: ['./pago.sim.component.css']
 })
@@ -21,7 +21,7 @@ export class PagoSimComponent {
   compra: Compra = {
     descripcion: '',
     precio_total: 0,
-    user_id: 0,
+    user: 0,
     detalles: [],
     direccion: '',
     ciudad: '',
@@ -47,16 +47,16 @@ export class PagoSimComponent {
     const compra: Compra = {
       descripcion: `${nombresProductos}`,
       precio_total: this.total,
-      user_id: userId,
-      user_first_name: '', // Ajusta según los datos disponibles
-      user_last_name: '',  // Ajusta según los datos disponibles
-      detalles: [],  // Aquí agregarás los detalles más adelante
-      direccion: '',  // Ajusta según los datos disponibles
-      ciudad: '',  // Ajusta según los datos disponibles
-      codigoPostal: '',  // Ajusta según los datos disponibles
-      fecha: new Date(),
-      user:userId
+      user: userId,  
+      user_first_name: '', 
+      user_last_name: '',  
+      detalles: [],  
+      direccion: '',  
+      ciudad: '',  
+      codigoPostal: '', 
+      fecha: new Date()
     };
+     
   
     this.http.post('/api/compra/', compra).subscribe(
       (compraResponse: any) => {
@@ -76,7 +76,7 @@ export class PagoSimComponent {
         forkJoin(detallesRequests).subscribe(
           () => {
             const pedido: Pedido = {
-              id_pedido: '', // Ajusta según la lógica de tu negocio
+              id_pedido: '', 
               fecha_pedido: new Date(),
               estado: 'pagado',
               user_id: userId
@@ -86,7 +86,7 @@ export class PagoSimComponent {
               pedidoResponse => {
                 console.log('Pedido registrado con éxito', pedidoResponse);
                 alert('Compra realizada con éxito');
-                this.clearFormAndCart(); // Llama a la nueva función para limpiar el formulario y el carrito
+                this.clearFormAndCart(); 
               },
               error => {
                 console.error('Error al registrar el pedido', error);
@@ -108,20 +108,20 @@ export class PagoSimComponent {
   }
   
   getUserId(): number {
-    // Implementa la lógica para obtener el user_id desde el token o el contexto de autenticación
-    const token = this.logService.getToken();  // Ejemplo de cómo obtener el token de un servicio
+    
+    const token = this.logService.getToken();  
     if (token) {
       const payload = JSON.parse(atob(token.split('.')[1]));
       return payload.user_id;
     }
-    return 0; // Devuelve 0 o lanza un error si el user_id no se encuentra
+    return 0; 
   }
 
   clearFormAndCart() {
-    this.cartService.clearCart(); // Limpia el carrito de compras
+    this.cartService.clearCart(); 
     this.cartItems = [];
     this.total = 0;
-    this.cardNumber = ''; // Limpiar campos del formulario
+    this.cardNumber = ''; 
     this.expDate = '';
     this.cvv = '';
   }

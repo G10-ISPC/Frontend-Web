@@ -2,10 +2,11 @@ import { NgComponentOutlet } from '@angular/common';
 import { AsyncPipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { DecimalFormatPipe } from '../../../shared/pipes/decimal-format.pipe';
+import { DecimalFormatPipe } from '../../../core/pipes/decimal-format.pipe';
 import { DetalleService } from '../../../core/services/detalle.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Detalle,Compra } from '../../../shared/interfaces/compra';
+import { Detalle } from '../../../core/interfaces/detalle';
+import { Compra } from '../../../core/interfaces/compra';
 import { CompraService } from '../../../core/services/compra.service';
 
 @Component({

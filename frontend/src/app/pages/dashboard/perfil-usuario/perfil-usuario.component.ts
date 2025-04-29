@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { LogService } from '../../../core/services/log.service';
-import { usuario } from '../../../shared/interfaces/usuario';
+import { usuario } from '../../../core/interfaces/usuario';
 
 @Component({
   selector: 'app-perfil-usuario',

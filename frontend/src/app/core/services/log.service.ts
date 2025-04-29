@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
-import { LogRequest } from '../../shared/interfaces/logRequest';
-import { LogResponse } from '../../shared/interfaces/logResponse';
-import { usuario } from '../../shared/interfaces/usuario';
+import { LoginResponse } from '../interfaces/request-response';
+import { LoginRequest } from '../interfaces/request-response';
+import { usuario } from '../interfaces/usuario';
 
 @Injectable({
   providedIn: 'root'
@@ -72,9 +72,9 @@ export class LogService {
     return this.isAdmin$.asObservable();
   }
 
-  login(credentials: LogRequest): Observable<LogResponse> {
-    return this.http.post<LogResponse>(this.apiUrl, credentials).pipe(
-      tap((response: LogResponse) => {
+  login(credentials: LoginRequest): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(this.apiUrl, credentials).pipe(
+      tap((response: LoginResponse) => {
         const token = response.token;
         if (token) {
           localStorage.setItem(this.TOKEN_KEY, token);

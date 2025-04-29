@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Product } from '../../shared/interfaces/products.data';
+import { Product } from '../interfaces/producto';
 import { map } from 'rxjs/operators';
 
 
@@ -45,8 +45,7 @@ export class ProductoService {
   
           if (typeof producto.precio === 'string') {
             producto.precio = parseFloat(producto.precio);
-          }      
-          producto.main_imagen = producto.main_imagen;
+          }       
 
           return producto;
         });
