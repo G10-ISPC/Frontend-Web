@@ -3,9 +3,7 @@ export interface Developer {
     name: string;
     fotoUrl: string;
     rol: string;
-    redesSociales: {
-        facebook?: string;
-        instagram?: string;
+    redesSociales: {        
         linkedin?: string;
         github?: string;
     };

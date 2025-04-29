@@ -1,11 +1,9 @@
-// login.component.ts
-
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { LogService } from '../../core/services/log.service';
-import { LogRequest } from '../../shared/interfaces/logRequest';
-import { LogResponse } from '../../shared/interfaces/logResponse';
+import { LogService } from '../../../core/services/log.service';
+import { LoginRequest } from '../../../core/interfaces/request-response';
+import { LoginResponse } from '../../../core/interfaces/request-response';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -22,10 +20,9 @@ export class LoginComponent implements OnInit {
   welcomeMessage: string = "";
   passwordFieldType: string = 'password';
 
-  // Nueva variable para gestionar los intentos de login
   loginAttempts: number = 0;
-  MAX_ATTEMPTS: number = 3; // Máximo de intentos fallidos
-  BLOCK_TIME: number = 5 * 60 * 1000; // 5 minutos de bloqueo
+  MAX_ATTEMPTS: number = 3; 
+  BLOCK_TIME: number = 5 * 60 * 1000; 
   blockStartTime: number = 0;
 
   constructor(
@@ -39,10 +36,10 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [
         Validators.required, 
-        Validators.minLength(8), // Mínimo 8 caracteres
-        Validators.pattern('.*[A-Z].*'), // Al menos una mayúscula
-        Validators.pattern('.*[0-9].*'), // Al menos un número
-        Validators.pattern('.*[!@#$%^&*(),.?":{}|<>].*') // Al menos un carácter especial (opcional)
+        Validators.minLength(8), 
+        Validators.pattern('.*[A-Z].*'), 
+        Validators.pattern('.*[0-9].*'), 
+        Validators.pattern('.*[!@#$%^&*(),.?":{}|<>].*') 
       ]],
     });
   }
@@ -59,20 +56,19 @@ export class LoginComponent implements OnInit {
     this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
   }
 
-  // Función para verificar si el login está bloqueado
+  
   isBlocked(): boolean {
     if (this.blockStartTime === 0) {
-      return false; // No está bloqueado
+      return false; 
     }
     const currentTime = Date.now();
     if (currentTime - this.blockStartTime >= this.BLOCK_TIME) {
-      this.resetLoginAttempts(); // Reiniciar intentos después del tiempo de bloqueo
-      return false; // Ya no está bloqueado
+      this.resetLoginAttempts(); 
+      return false; 
     }
-    return true; // Aún está bloqueado
+    return true; 
   }
 
-  // Resetear intentos de login
   resetLoginAttempts(): void {
     this.loginAttempts = 0;
     this.blockStartTime = 0;
@@ -85,9 +81,9 @@ export class LoginComponent implements OnInit {
     }
 
     if (this.loginForm.valid) {
-      const credentials: LogRequest = this.loginForm.value;
+      const credentials: LoginRequest = this.loginForm.value;
       this.logService.login(credentials).subscribe({
-        next: (userData: LogResponse) => {
+        next: (userData: LoginResponse) => {
           const userInfo = this.logService.getUserIdFromToken();
           const firstName = userInfo.first_name;
           const lastName = userInfo.last_name;
@@ -98,7 +94,7 @@ export class LoginComponent implements OnInit {
             this.router.navigateByUrl('/home');
           }, 3000);
           this.loginForm.reset();
-          this.resetLoginAttempts(); // Reiniciar intentos al hacer login exitoso
+          this.resetLoginAttempts(); 
         },
         error: (error) => {
           console.error("Error en el inicio de sesión:", error);
@@ -107,7 +103,7 @@ export class LoginComponent implements OnInit {
 
           this.loginAttempts++;
           if (this.loginAttempts >= this.MAX_ATTEMPTS) {
-            this.blockStartTime = Date.now(); // Bloquear después de 3 intentos fallidos
+            this.blockStartTime = Date.now(); 
             alert("Demasiados intentos fallidos. Cuenta bloqueada por 5 minutos.");
           }
 

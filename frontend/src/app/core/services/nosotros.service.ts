@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Developer } from '../../shared/interfaces/developer.interface';
+import { Developer } from '../interfaces/developer';
 
 
 @Injectable({
@@ -19,9 +19,7 @@ obtenerDeveloper()
         name: 'Mariana Cos',
         fotoUrl: '../assets/img/mariana.png',
         rol: 'Developer Team',
-        redesSociales: {
-          facebook: 'https://www.facebook.com',
-          instagram: 'https://www.instagram.com',
+        redesSociales: {          
           linkedin: 'https://www.linkedin.com',
           github: 'https://github.com',
           },
@@ -33,9 +31,7 @@ obtenerDeveloper()
         name: 'Carla Arévalo',
         fotoUrl: '../assets/img/carla.png',
         rol: 'Developer Team',
-        redesSociales: {
-          facebook: 'https://www.facebook.com',
-          instagram: 'https://www.instagram.com',
+        redesSociales: {          
           linkedin: 'https://www.linkedin.com',
           github: 'https://github.com/CarlaArevalo',
         },
@@ -47,9 +43,7 @@ obtenerDeveloper()
         name: 'Micaela Juarez',
         fotoUrl: '../assets/img/micaela.png',
         rol: 'Developer Team',
-        redesSociales: {
-          facebook: 'https://www.facebook.com',
-          instagram: 'https://www.instagram.com',
+        redesSociales: {          
           linkedin: 'https://www.linkedin.com',
           github: 'https://github.com',
         },
@@ -61,9 +55,7 @@ obtenerDeveloper()
         name: 'Delfina Aricoma',
         fotoUrl: '../assets/img/delfina.png',
         rol: 'Developer Team',
-        redesSociales: {
-          facebook: 'https://www.facebook.com',
-          instagram: 'https://www.instagram.com',
+        redesSociales: {          
           linkedin: 'https://www.linkedin.com',
           github: 'https://github.com',
         },
@@ -75,9 +67,7 @@ obtenerDeveloper()
         name: 'Melisa Gulle',
         fotoUrl: '../assets/img/Melisa.png',
         rol: 'Developer Team',
-        redesSociales: {
-          facebook: 'https://www.facebook.com',
-          instagram: 'https://www.instagram.com',
+        redesSociales: {          
           linkedin: 'https://www.linkedin.com',
           github: 'https://github.com',
         },
@@ -89,9 +79,7 @@ obtenerDeveloper()
         name: 'Dalma Ponce',
         fotoUrl: '../assets/img/Dalma.jpg',
         rol: 'Developer Team',
-        redesSociales: {
-          facebook: 'https://www.facebook.com',
-          instagram: 'https://www.instagram.com',
+        redesSociales: {          
           linkedin: 'https://www.linkedin.com',
           github: 'https://github.com',
         },
@@ -103,9 +91,7 @@ obtenerDeveloper()
         name: 'Laura Cruz',
         fotoUrl: '../assets/img/laura.png',
         rol: 'Developer Team',
-        redesSociales: {
-          facebook: 'https://www.facebook.com',
-          instagram: 'https://www.instagram.com',
+        redesSociales: {          
           linkedin: 'https://www.linkedin.com',
           github: 'https://github.com',
         },

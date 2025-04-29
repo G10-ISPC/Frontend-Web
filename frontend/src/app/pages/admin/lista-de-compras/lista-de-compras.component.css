@@ -1,0 +1,83 @@
+.admin-container,
+.product-section,
+.compras-section {
+  background-color: #121212;
+  min-height: 100vh;
+  padding: 20px;
+  color: #ffffff;
+}
+
+.btn-yellow {
+  background-color: #ffcc00;
+  color: #121212;
+  border: none;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.btn-yellow:hover {
+  background-color: #e6b800;
+}
+
+.table-container, .card {
+  background-color: #1e1e1e;
+  box-shadow: 0 0 10px rgba(255, 204, 0, 0.4);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.dark-input {
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  color: #e0e0e0;
+}
+
+.dark-input::placeholder {
+  color: #cccccc;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  color: #ffcc00;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  color: #ffcc00;
+  font-size: 1.2rem;
+}
+
+.btn-icon:hover {
+  color: #e6b800;
+}
+
+.dark-card {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  border: 1px solid #333;
+}
+
+@media (max-width: 576px) {
+  .table thead {
+    display: none;
+  }
+
+  .table tbody td {
+    display: block;
+    width: 100%;
+    text-align: right;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  .table tbody td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-left: 15px;
+    font-weight: bold;
+    text-align: left;
+  }
+}

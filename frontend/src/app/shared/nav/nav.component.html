@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <a class="nav-link d-flex align-items-center" routerLink="/home">
       <img class="icon" src="../../../assets/img/logo1.ico" alt="Ricco"class="logo me-2">
-      <span *ngIf="isUserLogin$ | async" class="nav-link text-light">{{ firstName }} {{lastName}}</span> <!--16/01/25, muestra nombre usuario -->
+      <span *ngIf="isUserLogin$ | async" class="nav-link text-light">{{ firstName }} {{lastName}}</span> 
       <span *ngIf="isAdmin$ | async" class="nav-link text-light">  - (Admin)</span>
     </a>
     <button
@@ -24,9 +24,7 @@
         <a  *ngIf="(isUserLogin$ | async) && !(isAdmin$ | async)" class="nav-link text-light" routerLink="/dashboard">Mis Compras</a>
         <a  *ngIf="(isAdmin$ | async)" class="nav-link text-light" routerLink="/admin">Dashboard Admin</a>
         <a  *ngIf="!(isUserLogin$ | async)" class="nav-link text-light" routerLink="/login">Inicio Sesion</a>
-        <a  *ngIf="isUserLogin$ | async"class="nav-link text-light" role="button" (click)="logout()">Salida</a>
-        
-        
+        <a  *ngIf="isUserLogin$ | async"class="nav-link text-light" role="button" (click)="logout()">Salida</a>         
         
       </div>
     </div>
