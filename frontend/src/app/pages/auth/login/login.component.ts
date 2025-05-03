@@ -42,6 +42,9 @@ export class LoginComponent implements OnInit {
         Validators.pattern('.*[!@#$%^&*(),.?":{}|<>].*') 
       ]],
     });
+    setTimeout(() => {
+      this.loginForm.reset();
+    }, 0);    
   }
 
   get email() {

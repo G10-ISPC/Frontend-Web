@@ -1,7 +1,8 @@
 <main>
   <div class="contenedor">
     <div class="caja" id="form">
-      <form [formGroup]="loginForm" (ngSubmit)="login()" class="contenedor-ingreso" id="ingreso">
+      <form [formGroup]="loginForm" (ngSubmit)="login()" class="contenedor-ingreso" id="ingreso" autocomplete="off" autocorrect="off"
+      spellcheck="false">
         <p class="text-danger">{{ loginError }}</p>
         <div class="caja-titulo">
           <h3>Bienvenido</h3>
@@ -9,7 +10,7 @@
         <div class="grupo-inputs">
           <!-- Campo para el email -->
           <div class="campo-input">
-            <input type="text" formControlName="email" class="caja-input" id="logEmail" required>
+            <input type="text" formControlName="email" class="caja-input" id="logEmail" required autocomplete="off">
             <label for="logEmail">E-mail</label>
             <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="text-danger">
               <div *ngIf="email?.errors?.['required']">
@@ -24,7 +25,7 @@
           <!-- Campo para la contraseña -->
           <div class="campo-input">
             <div class="input-group">
-              <input [type]="passwordFieldType" formControlName="password" class="caja-input" id="contrasenaIngreso" required>
+              <input [type]="passwordFieldType" formControlName="password" class="caja-input" id="contrasenaIngreso" required autocomplete="new-password">
               <label for="contrasenaIngreso">Contraseña</label>
               <div class="input-group-append">
                 <span class="input-group-text" (click)="togglePasswordVisibility()">
@@ -63,3 +64,4 @@
 <div *ngIf="showWelcomeMessage" class="welcome-message">
   {{ welcomeMessage }}
 </div>
+

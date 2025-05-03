@@ -39,7 +39,7 @@ obtenerDeveloper()
       },
       
       {
-        id: 4,
+        id: 3,
         name: 'Micaela Juarez',
         fotoUrl: '../assets/img/micaela.png',
         rol: 'Developer Team',
@@ -51,7 +51,7 @@ obtenerDeveloper()
       },
 
       {
-        id: 5,
+        id: 4,
         name: 'Delfina Aricoma',
         fotoUrl: '../assets/img/delfina.png',
         rol: 'Developer Team',
@@ -63,7 +63,7 @@ obtenerDeveloper()
       },
 
       {
-        id: 6,
+        id: 5,
         name: 'Melisa Gulle',
         fotoUrl: '../assets/img/Melisa.png',
         rol: 'Developer Team',
@@ -75,7 +75,7 @@ obtenerDeveloper()
       },
 
       {
-        id: 7,
+        id: 6,
         name: 'Dalma Ponce',
         fotoUrl: '../assets/img/Dalma.jpg',
         rol: 'Developer Team',
@@ -87,13 +87,25 @@ obtenerDeveloper()
       },
 
       {
-        id: 8,
+        id: 7,
         name: 'Laura Cruz',
         fotoUrl: '../assets/img/laura.png',
         rol: 'Developer Team',
         redesSociales: {          
           linkedin: 'https://www.linkedin.com',
           github: 'https://github.com',
+        },
+        
+      },
+
+      {
+        id: 8,
+        name: 'Ernesto Cevasco',
+        fotoUrl: '../assets/img/Ernesto.png',
+        rol: 'Developer Team',
+        redesSociales: {          
+          linkedin: 'https://www.linkedin.com',
+          github: 'https://github.com/Noobuyer',
         },
         
       },
