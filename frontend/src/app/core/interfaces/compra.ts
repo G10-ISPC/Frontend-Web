@@ -10,7 +10,7 @@ export interface Compra {
   ciudad: string;
   codigoPostal: string;
   fecha: Date;
-  detalles: Detalle[]; // Detalle y DetallesCompra son lo mismo  
+  detalles: Detalle[];   
 }
 
 

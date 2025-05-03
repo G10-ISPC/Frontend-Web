@@ -1,36 +1,40 @@
-/* dashboard.component.css */
-.dashboard-container {
-    display: flex;
-    height: 100vh; /* Asegúrate de que ocupe toda la altura de la ventana */
-  }
-  
-  .sidebar {
-    width: 200px;
-    background-color: #6c757d; /* Utiliza la clase bg-secondary de Bootstrap */
-    padding: 20px;
-    box-sizing: border-box; /* Asegúrate de que el padding esté incluido en el ancho total */
-  }
-  
-  .main-content {
-    flex-grow: 1;
-    padding: 20px;
-    box-sizing: border-box; /* Asegúrate de que el padding esté incluido en el ancho total */
-  }
-  
-  nav {
-    width: 100%; /* Asegúrate de que el nav ocupe todo el ancho */
-    background-color: #343a40; /* Color de fondo del nav principal */
-    color: #fff; /* Color del texto en el nav */
-    padding: 10px; /* Ajusta el padding según sea necesario */
-    box-sizing: border-box; /* Asegúrate de que el padding esté incluido en el ancho total */
-  }
-  
-  .col-2 {
-    flex: 0 0 16.666667%;
-    max-width: 16.666667%;
-  }
-  
-  .bg-secondary {
-    background-color: #6c757d !important;
-  }
-  
+
+.d-flex.h-100 {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+aside {
+  background-color: #1e1e1e;
+  border-right: 1px solid rgba(255, 204, 0, 0.3);
+  min-width: 200px;
+}
+
+aside .btn {
+  width: 100%;
+  text-align: left;
+  color: #ffcc00;
+  border-color: #ffcc00;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+
+aside .btn:hover,
+aside .btn.active {
+  background-color: rgba(255, 204, 0, 0.1);
+  color: #ffffff;
+}
+
+main {
+  background-color: #121212;
+  padding: 2rem;
+}
+
+
+main h2 {
+  color: #ffcc00;
+}
+
+main p.text-muted {
+  color: #cccccc;
+}

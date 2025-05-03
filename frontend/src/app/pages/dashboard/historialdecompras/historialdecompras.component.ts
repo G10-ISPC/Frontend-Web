@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Detalle } from '../../../core/interfaces/detalle';
 import { Compra } from '../../../core/interfaces/compra';
 import { CompraService } from '../../../core/services/compra.service';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-historialdecompras',
@@ -22,7 +23,8 @@ export class HistorialdecomprasComponent implements OnInit {
   getCompra: Compra[] = [];  
   constructor(
     private detalleService: DetalleService,
-    private compraService: CompraService 
+    private compraService: CompraService,
+    
   ) { }
 
   ngOnInit(): void {
@@ -51,4 +53,6 @@ export class HistorialdecomprasComponent implements OnInit {
       }
     );
   }
+  
+  
 }
