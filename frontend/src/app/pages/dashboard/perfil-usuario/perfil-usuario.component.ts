@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { LogService } from '../../../core/services/log.service';
 import { usuario } from '../../../core/interfaces/usuario';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-perfil-usuario',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './perfil-usuario.component.html',
   styleUrl: './perfil-usuario.component.css'
 })
@@ -86,4 +87,5 @@ export class PerfilUsuarioComponent implements OnInit {
       });
     }
   }
+ 
 }

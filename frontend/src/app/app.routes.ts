@@ -11,8 +11,6 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { HistorialdecomprasComponent } from './pages/dashboard/historialdecompras/historialdecompras.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { isLoggedInGuard } from './core/guards/is-logged-in.guard';
-import { PagoSimComponent } from './pages/pago.sim/pago.sim.component';
-
 
 
 export const routes: Routes = [
@@ -26,8 +24,7 @@ export const routes: Routes = [
     { path: 'registro', component: RegistroComponent },
     { path: 'dashboard', component: DashboardComponent, canActivate:[isLoggedInGuard]  },
     { path: 'historialdecompras', component: HistorialdecomprasComponent },
-    { path: 'cart', component: CartComponent },
-    { path: 'pago.sim', component: PagoSimComponent  },
+    { path: 'cart', component: CartComponent },    
     { path: '**', component: Error404Component },
     
 ];

@@ -65,30 +65,7 @@
             <div *ngIf="telefono.errors?.['required']">El número de teléfono es obligatorio.</div>
             <div *ngIf="telefono.errors?.['pattern']">El número de teléfono debe ser válido.</div>
           </div>
-        </div>
-
-        <!-- Dirección -->
-        <!-- <div class="col-md-6 col-lg-6">
-          <div formGroupName="direccion">
-            <label for="calle"></label>
-            <input type="text" formControlName="calle" id="calle" class="form-control" placeholder="Calle">
-            <div *ngIf="calle.invalid && (calle.dirty || calle.touched)" class="alert alert-danger mt-2">
-              <div *ngIf="calle.errors?.['required']">La calle es obligatoria.</div>
-              <div *ngIf="calle.errors?.['pattern']">La calle debe ser válida.</div>
-            </div>
-          </div>
-        </div> -->
-        
-        <!-- <div class="col-md-6 col-lg-6">
-          <div formGroupName="direccion">
-            <label for="numero"></label>
-            <input type="text" formControlName="numero" id="numero" class="form-control" placeholder="Número">
-            <div *ngIf="numero.invalid && (numero.dirty || numero.touched)" class="alert alert-danger mt-2">
-              <div *ngIf="numero.errors?.['required']">El número es obligatorio.</div>
-              <div *ngIf="numero.errors?.['pattern']">El número debe ser válido.</div>
-            </div>
-          </div>
-        </div> -->
+        </div>        
       </div>
 
       <!-- Botón de Submit -->
