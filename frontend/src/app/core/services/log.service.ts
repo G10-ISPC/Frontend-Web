@@ -5,6 +5,7 @@ import { tap, catchError } from 'rxjs/operators';
 import { LoginResponse } from '../interfaces/request-response';
 import { LoginRequest } from '../interfaces/request-response';
 import { usuario } from '../interfaces/usuario';
+import { Router, RouterLink } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,14 @@ export class LogService {
   private readonly isAdmin$ = new BehaviorSubject<boolean>(false);
   private readonly PROFILE_URL = 'api/perfilUsuario/';
 
+  private currentUserSubject = new BehaviorSubject<{ first_name: string | null, last_name: string | null }>(
+    this.getUserIdFromToken()
+  );
+  currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  private sessionTimeout: any;
+
+  constructor(private http: HttpClient, private router: Router) {
     this.checkAdminStatus();
   }
 
@@ -59,6 +66,11 @@ export class LogService {
     }
   }
 
+  setUser(user: { first_name: string | null, last_name: string | null }) {
+    this.currentUserSubject.next(user);
+  }
+
+
   checkAdminStatus() {
     const token = this.getToken();
     if (token) {
@@ -83,7 +95,9 @@ export class LogService {
   
           const decoded = this.decodeToken(token);
           console.log('Token decodificado en login:', decoded);
-          this.isAdmin$.next(decoded.is_staff);  
+          this.isAdmin$.next(decoded.is_staff);
+          this.setUser({ first_name: decoded.first_name, last_name: decoded.last_name }); 
+          this.startSessionTimeout(); 
         } else {
           throw new Error("Este usuario no existe.");
         }
@@ -91,7 +105,21 @@ export class LogService {
       catchError(this.handleError)
     );
   }
-  
+
+  startSessionTimeout(): void {
+    this.clearSessionTimeout();
+    this.sessionTimeout = setTimeout(() => {
+      this.logout();
+    }, 3 * 60 * 1000); 
+  }
+
+  clearSessionTimeout(): void {
+    if (this.sessionTimeout) {
+      clearTimeout(this.sessionTimeout);
+      this.sessionTimeout = null;
+    }
+  }
+
 
   isUserLogin(): Observable<boolean> {
     return this.isUserLogin$.asObservable();
@@ -101,6 +129,10 @@ export class LogService {
     localStorage.removeItem(this.TOKEN_KEY);
     this.isUserLogin$.next(false);
     this.isAdmin$.next(false);
+    this.setUser({ first_name: null, last_name: null });
+    this.clearSessionTimeout();
+    this.router.navigate(['/login']);
+
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {

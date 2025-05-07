@@ -18,7 +18,7 @@ export class NavComponent {
   public firstName: string | null = null; 
   public lastName: string | null = null;
 constructor (private logService: LogService, 
-  private route: Router
+  private router: Router
 ){
   this.isAdmin$.subscribe( __values=> { 
     console.log (__values) 
@@ -28,16 +28,21 @@ constructor (private logService: LogService,
 readonly isUserLogin$=this.logService.isUserLogin();
 
 ngOnInit(): void { 
-  const userInfo = this.logService.getUserIdFromToken(); 
-  console.log('User Info:', userInfo); 
-  this.firstName = userInfo.first_name;  
-  this.lastName = userInfo.last_name;  
+    this.logService.currentUser$.subscribe(user => {
+    this.firstName = user.first_name;
+    this.lastName = user.last_name;
+  });
+
   console.log('First Name:', this.firstName);  
   console.log('Last Name:', this.lastName); 
+
+  window.addEventListener('click', () => this.logService.startSessionTimeout());
+  window.addEventListener('mousemove', () => this.logService.startSessionTimeout());
+  window.addEventListener('keydown', () => this.logService.startSessionTimeout());
+
 }
 
 logout():void{
   this.logService.logout();
-  this.route.navigateByUrl("/login")
 }
 }
