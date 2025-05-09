@@ -22,6 +22,7 @@
         <a class="nav-link text-light" routerLink="/contacto">Contacto</a>
         <a *ngIf="isUserLogin$ | async" class="nav-link text-light" routerLink="/productos">Productos</a>
         <a  *ngIf="(isUserLogin$ | async) && !(isAdmin$ | async)" class="nav-link text-light" routerLink="/dashboard">Mis Compras</a>
+        <a  *ngIf="(isUserLogin$ | async) && !(isAdmin$ | async)" class="nav-link text-light" routerLink="/perfil-usuario">Perfil</a> 
         <a  *ngIf="(isAdmin$ | async)" class="nav-link text-light" routerLink="/admin">Dashboard Admin</a>
         <a  *ngIf="!(isUserLogin$ | async)" class="nav-link text-light" routerLink="/login">Inicio Sesion</a>
         <a  *ngIf="isUserLogin$ | async"class="nav-link text-light" role="button" (click)="logout()">Salida</a>         

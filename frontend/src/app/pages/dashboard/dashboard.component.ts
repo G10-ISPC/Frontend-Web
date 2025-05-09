@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
+// import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { HistorialdecomprasComponent } from './historialdecompras/historialdecompras.component';
 import { LogService } from '../../core/services/log.service';
 
@@ -9,7 +9,7 @@ import { LogService } from '../../core/services/log.service';
   standalone: true,
   imports: [
     CommonModule,
-    PerfilUsuarioComponent,
+    // PerfilUsuarioComponent,
     HistorialdecomprasComponent
   ],
   templateUrl: './dashboard.component.html',
