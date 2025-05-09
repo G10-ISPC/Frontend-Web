@@ -11,7 +11,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { HistorialdecomprasComponent } from './pages/dashboard/historialdecompras/historialdecompras.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { isLoggedInGuard } from './core/guards/is-logged-in.guard';
-
+import { PerfilUsuarioComponent } from './pages/perfil-usuario/perfil-usuario.component';
 
 export const routes: Routes = [
     { path: "", redirectTo: "/home", pathMatch: "full" },
@@ -23,6 +23,7 @@ export const routes: Routes = [
     { path: 'admin', component: AdminComponent, canActivate:[isLoggedInGuard]  },
     { path: 'registro', component: RegistroComponent },
     { path: 'dashboard', component: DashboardComponent, canActivate:[isLoggedInGuard]  },
+    { path: 'perfil-usuario', component: PerfilUsuarioComponent, canActivate:[isLoggedInGuard]},
     { path: 'historialdecompras', component: HistorialdecomprasComponent },
     { path: 'cart', component: CartComponent },    
     { path: '**', component: Error404Component },
