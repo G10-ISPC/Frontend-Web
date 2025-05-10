@@ -16,6 +16,9 @@ import { RouterModule } from '@angular/router';
 })
 export class PerfilUsuarioComponent implements OnInit {
   profileForm!: FormGroup;
+  //varibles para habilitar edicion
+  isEditing: boolean = false;
+  originalDataBackup: Partial<usuario> = {};
 
   constructor(
     private fb: FormBuilder,
@@ -24,43 +27,50 @@ export class PerfilUsuarioComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.profileForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      first_name: [''],
-      last_name: [''],
-      password: [''],
-      password2: [''],
-      telefono: ['']
-    });
-
+    this.initializeForm();
     this.loadUserProfile();
   }
 
-  loadUserProfile(): void {
-    this.LogService.getUserProfile().subscribe(usuario => {
-      console.log('Usuario recibido:', usuario);
-      this.profileForm.patchValue({
-        email: usuario.email,
-        first_name: usuario.first_name,
-        last_name: usuario.last_name,
-        telefono: usuario.telefono ?? ''
-      });
+  private initializeForm(): void {
+    this.profileForm = this.fb.group({
+      email: ['', Validators.required],
+      first_name: ['', Validators.required],
+      last_name: ['', Validators.required],
+      telefono: ['']
     });
+    this.profileForm.disable();
+  }
+
+  loadUserProfile(): void {
+    this.LogService.getUserProfile().subscribe({ 
+      next: (usuario: usuario) =>{
+        //console.log('Usuario recibido:', usuario);
+        this.profileForm.patchValue({
+          email: usuario.email,
+          first_name: usuario.first_name,
+          last_name: usuario.last_name,
+          telefono: usuario.telefono ?? ''
+        });
+      },
+      error: (err) => console.error('Error cargando perfil:', err)
+    });
+  }
+
+  startEditing(): void { 
+    this.isEditing = true;
+    this.originalDataBackup = this.profileForm.getRawValue(); 
+    this.profileForm.enable(); 
+  }
+  
+  cancelEditing(): void {
+    this.isEditing = false;
+    this.profileForm.patchValue(this.originalDataBackup);
+    this.profileForm.disable();
   }
 
   updateProfile(): void {
     if (this.profileForm.invalid) {
       return;
-    }
-
-    const password = this.profileForm.value.password;
-    const password2 = this.profileForm.value.password2;
-
-    if (password || password2) {
-      if (password !== password2) {
-        alert('Las contraseñas no coinciden.');
-        return;
-      }
     }
 
     const payload: any = {
@@ -70,12 +80,16 @@ export class PerfilUsuarioComponent implements OnInit {
       telefono: this.profileForm.value.telefono
     };
 
-    if (password) {
-      payload.password = password;
-    }
 
-    this.LogService.updateUserProfile(payload).subscribe(() => {
+    this.LogService.updateUserProfile(payload).subscribe({ next: () => {
       alert('Perfil actualizado correctamente.');
+      this.isEditing = false;
+      this.profileForm.disable();
+    },
+    error: (err) => {
+      alert('Error al actualizar el perfil');
+      console.error(err);
+    }
     });
   }
 

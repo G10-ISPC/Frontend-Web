@@ -5,43 +5,36 @@
         <h5 class="mb-0">Editar Perfil</h5>
       </div>
       <div class="card-body">
-        <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+        <form [formGroup]="profileForm" (ngSubmit)="isEditing && updateProfile()">
           <div class="form-group mb-3">
             <label for="first_name">Nombre</label>
-            <input id="first_name" type="text" class="form-control" formControlName="first_name" />
+            <input id="first_name" type="text" class="form-control" formControlName="first_name" [class.disabled]="!isEditing"/>
           </div>
 
           <div class="form-group mb-3">
             <label for="last_name">Apellido</label>
-            <input id="last_name" type="text" class="form-control" formControlName="last_name" />
+            <input id="last_name" type="text" class="form-control" formControlName="last_name" [class.disabled]="!isEditing"/>
           </div>
 
           <div class="form-group mb-3">
             <label for="telefono">Telefono</label>
-            <input id="telefono" type="telefono" class="form-control" formControlName="telefono" />
-          </div>
-          
-          <div class="form-group mb-3">
-            <label for="password">Contraseña</label>
-            <input id="password" type="password" class="form-control" formControlName="password" />
-          </div>
-          
-          <div class="form-group mb-3">
-            <label for="password2">Repetir Contraseña</label>
-            <input id="password2" type="password" class="form-control" formControlName="password2" />
-            <div *ngIf="profileForm.value.password && profileForm.value.password2 && profileForm.value.password !== profileForm.value.password2" class="text-danger mt-1">
-              Las contraseñas no coinciden.
-            </div>
+            <input id="telefono" type="tel" class="form-control" formControlName="telefono" [class.disabled]="!isEditing"/>
           </div>
           
           <div class="form-group mb-3">
             <label for="email">Correo Electrónico</label>
-            <input id="email" type="email" class="form-control" formControlName="email" />
+            <input id="email" type="email" class="form-control" formControlName="email" [class.disabled]="!isEditing"/>
           </div>
 
-          <button type="submit" class="btn btn-warning w-100" [disabled]="profileForm.invalid">
-            Guardar Cambios
-          </button>
+          <div *ngIf="!isEditing" class="mt-4">
+            <button type="button"  class="btn btn-warning w-100" (click)="startEditing()">Editar</button>
+          </div>
+          
+          <div *ngIf="isEditing" class="d-grid gap-2">
+            <button type="submit"  class="btn btn-warning w-100" [disabled]="profileForm.invalid">Guardar</button>
+            <button type="button"  class="btn btn-dark w-100" (click)="cancelEditing()">Cancelar</button>
+          </div>
+
         </form>
       </div>
     </div>
