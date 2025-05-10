@@ -1,7 +1,6 @@
 import { Detalle } from "./detalle";
 
 export interface Compra {
-  id_compra?: number
   descripcion: string;
   precio_total: number;
   user: number;
@@ -11,7 +10,7 @@ export interface Compra {
   ciudad: string;
   codigoPostal: string;
   fecha: Date;
-  detalles: Detalle[]; // Detalle y DetallesCompra son lo mismo  
-  estado?: string;
-  cancelable_hasta:Date;
+  detalles: Detalle[];   
 }
+
+
