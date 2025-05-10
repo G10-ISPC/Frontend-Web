@@ -22,19 +22,6 @@
           </div>
           
           <div class="form-group mb-3">
-            <label for="password">Contraseña</label>
-            <input id="password" type="password" class="form-control" formControlName="password" />
-          </div>
-          
-          <div class="form-group mb-3">
-            <label for="password2">Repetir Contraseña</label>
-            <input id="password2" type="password" class="form-control" formControlName="password2" />
-            <div *ngIf="profileForm.value.password && profileForm.value.password2 && profileForm.value.password !== profileForm.value.password2" class="text-danger mt-1">
-              Las contraseñas no coinciden.
-            </div>
-          </div>
-          
-          <div class="form-group mb-3">
             <label for="email">Correo Electrónico</label>
             <input id="email" type="email" class="form-control" formControlName="email" />
           </div>
