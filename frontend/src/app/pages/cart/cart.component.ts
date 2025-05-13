@@ -8,7 +8,7 @@ import { LogService } from '../../core/services/log.service';
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CartItemCardComponent, RouterLink],
+  imports: [CartItemCardComponent],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],  
 })
