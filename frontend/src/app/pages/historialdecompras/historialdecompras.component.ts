@@ -2,15 +2,15 @@ import { NgComponentOutlet } from '@angular/common';
 import { AsyncPipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { DecimalFormatPipe } from '../../../core/pipes/decimal-format.pipe';
-import { DetalleService } from '../../../core/services/detalle.service';
+import { DecimalFormatPipe } from '../../core/pipes/decimal-format.pipe';
+import { DetalleService } from '../../core/services/detalle.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Detalle } from '../../../core/interfaces/detalle';
-import { Compra } from '../../../core/interfaces/compra';
-import { CompraService } from '../../../core/services/compra.service';
+import { Detalle } from '../../core/interfaces/detalle';
+import { Compra } from '../../core/interfaces/compra';
+import { CompraService } from '../../core/services/compra.service';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { CancelarPedidoResponse } from '../../../core/interfaces/cancelaPedidoResponse';
+import { CancelarPedidoResponse } from '../../core/interfaces/cancelaPedidoResponse';
 
 @Component({
   selector: 'app-historialdecompras',
@@ -25,8 +25,6 @@ export class HistorialdecomprasComponent implements OnInit {
   getDetalle: Detalle[] = [];
   getCompra: Compra[] = [];  
   private intervalosActivos: { [id: number]: any } = {};
-
-  
 
   constructor(
     private detalleService: DetalleService,

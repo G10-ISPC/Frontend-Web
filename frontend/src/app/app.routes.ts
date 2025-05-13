@@ -7,11 +7,12 @@ import { Error404Component } from './pages/error404/error404.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import { RegistroComponent } from './pages/auth/registro/registro.component';
 import { LoginComponent } from './pages/auth/login/login.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { HistorialdecomprasComponent } from './pages/dashboard/historialdecompras/historialdecompras.component';
+import { HistorialdecomprasComponent } from './pages/historialdecompras/historialdecompras.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { isLoggedInGuard } from './core/guards/is-logged-in.guard';
 import { PerfilUsuarioComponent } from './pages/perfil-usuario/perfil-usuario.component';
+import { IsAdminGuard } from './core/guards/isAdmin.guard';
+import { IsUserGuard } from './core/guards/isUser.guard';
 
 export const routes: Routes = [
     { path: "", redirectTo: "/home", pathMatch: "full" },
@@ -20,12 +21,11 @@ export const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'nosotros', component: NosotrosComponent },
     { path: 'contacto', component: ContactoComponent },
-    { path: 'admin', component: AdminComponent, canActivate:[isLoggedInGuard]  },
+    { path: 'admin', component: AdminComponent, canActivate: [isLoggedInGuard, IsAdminGuard] },
     { path: 'registro', component: RegistroComponent },
-    { path: 'dashboard', component: DashboardComponent, canActivate:[isLoggedInGuard]  },
-    { path: 'perfil-usuario', component: PerfilUsuarioComponent, canActivate:[isLoggedInGuard]},
-    { path: 'historialdecompras', component: HistorialdecomprasComponent },
-    { path: 'cart', component: CartComponent },    
+    { path: 'perfil-usuario', component: PerfilUsuarioComponent, canActivate: [isLoggedInGuard, IsUserGuard] },
+    { path: 'historialdecompras', component: HistorialdecomprasComponent, canActivate: [isLoggedInGuard, IsUserGuard] },
+    { path: 'cart', component: CartComponent, canActivate: [isLoggedInGuard, IsUserGuard] },   
     { path: '**', component: Error404Component },
     
 ];
