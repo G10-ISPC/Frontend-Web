@@ -36,6 +36,11 @@ export class CompraService {
     return this.http.put<Compra>(`${this.misComprasUrl}${id}/`, compra);
   }
 
+  // Método PATCH: actualiza un solo campo como 'estado'
+  actualizarCampoCompra(id: number, campos: Partial<Compra>): Observable<Compra> {
+    return this.http.patch<Compra>(`${this.misComprasUrl}${id}/`, campos);
+  }
+
   eliminarCompra(id: number): Observable<any> {
     return this.http.delete(`${this.misComprasUrl}${id}/`);
   }

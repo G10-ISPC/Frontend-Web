@@ -38,6 +38,10 @@ export class HistorialdecomprasComponent implements OnInit {
     this.obtenerDetalles();
     this.obtenerCompras(); 
     this.iniciarTemporizadores();  // Inicia el temporizador
+    // Llama al backend cada 30 segundos para actualizar los estados
+  setInterval(() => {
+    this.obtenerCompras();
+  }, 30000);
     
   }
 
