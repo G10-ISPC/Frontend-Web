@@ -1,11 +1,26 @@
-<div class="container-fluid mt-4">
+<div class="admin-container">
+  <h1 class="admin-title text-center">Administrador</h1>
+
+  <section class="productos-section">
+    <h2 class="section-title">Productos</h2>
+    <app-form-de-producto></app-form-de-producto>
+  </section>
+
+  <section class="compras-section">
+    <h2 class="section-title">Historial de Compra</h2>
+    <app-lista-de-compras></app-lista-de-compras>
+  </section>
+</div>
+
+
+
+<!-- <div class="container-fluid mt-4">
   <div class="row">
     <div class="col-2 bg-secondary p-3">
       <button (click)="showProducts()" class="btn btn-dark w-100 mb-2">Productos</button>
       <button (click)="showPurchases()" class="btn btn-dark w-100">Compras</button>
     </div>
-    <div class="col-10">
-      <!-- Mensaje por defecto cuando ninguna vista está seleccionada -->
+    <div class="col-10">      
       <div *ngIf="!view" class="white-box">
         <h3 class="text-center">Bienvenido al Panel de Administración</h3>
         <p class="text-center">Selecciona una opción para comenzar.</p>
@@ -37,17 +52,17 @@
                   <td id="descripcion">{{ producto.descripcion }}</td>
                   <td id="precio">{{ producto.precio }}</td>
                   <td>
-                    <!-- Botón de Visibilidad -->
+                   
                     <button (click)="toggleVisibility(producto)" class="btn btn-sm" title="Visibilidad">
                       <i class="fa-solid" [ngClass]="producto.visible ? 'fa-eye' : 'fa-eye-slash'"></i>
                     </button>
             
-                    <!-- Botón de Editar -->
+                    
                     <button (click)="editProduct(producto)" class="btn btn-sm" title="Editar">
                       <i class="fa-solid fa-pencil"></i>
                     </button>
             
-                    <!-- Botón de Eliminar -->
+                  
                     <button (click)="borrarData($event, producto.id_producto)" class="btn btn-sm" title="Eliminar">
                       <i class="fa-solid fa-trash"></i>
                     </button>
@@ -93,7 +108,6 @@
         </div>
       </section>
 
-      <!--aqui comienza la seccion del boton compras-->
       <section *ngIf="view === 'compras'" id="compras" class="mt-5">
         <div class="d-flex gap-3 mb-3">
           <input type="text" class="form-control" [(ngModel)]="filtroUsuario" placeholder="Buscar por usuario">
@@ -139,7 +153,7 @@
                     </tr>
                   </ng-container>
                 </tbody>
-                <!-- Mensaje si no hay compras -->
+              
                 <div *ngIf="!getCompra || getCompra.length === 0">
                   <p>No hay compras disponibles.</p>
                 </div>
@@ -151,3 +165,4 @@
     </div> 
   </div>
 </div>
+ -->

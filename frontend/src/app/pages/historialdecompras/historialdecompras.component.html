@@ -1,0 +1,56 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<div class="historial-card">
+    <div class="historial-header">
+      Historial de Compras
+     </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>N° Compra</th>
+                        <th>Fecha</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Estado</th>
+                        <th>Acciones</th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let compra of getCompra">
+                      <td>{{ compra.id_compra }}</td>
+                      <td>{{ compra.fecha | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                      <td>{{ generarDescripcionCompra(compra.detalles) }}</td>
+                      <td>${{ compra.precio_total | number:'1.0-0' }}</td>
+                      <td>{{compra.estado}}</td>
+                      <td>
+                        <button class="btn btn-sm"
+                                [ngClass]="{
+                                    'btn-danger': mostrarBotonCancelar(compra),
+                                    'btn-secondary': !mostrarBotonCancelar(compra)
+                                           }"
+                                [disabled]="!mostrarBotonCancelar(compra)"
+                                (click)="cancelarPedido(compra.id_compra!)">
+                                ❌ Cancelar pedido
+                        </button>
+
+                  
+                        <small *ngIf="compra.id_compra && temporizadores[compra.id_compra]" class="text-muted d-block mt-1">
+                          ⏳ {{ temporizadores[compra.id_compra!] }}
+                        </small>
+                        <small *ngIf="temporizadores[compra.id_compra!] === 'Tiempo agotado'" class="text-danger d-block mt-1">
+                          Ya no se puede cancelar
+                        </small>
+                      </td>
+                    </tr>
+                  </tbody>
+                  
+                <!-- Mensaje si no hay detalles -->
+                <div *ngIf="!getCompra || getCompra.length === 0">
+                    <p>No hay compras disponibles.</p>
+                </div>
+            </table>
+        </div>
+    </div>
+
+  

@@ -1,1 +1,81 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  app-root {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+
+
+  .app-download-section {
+    background-image: url('/assets/img/riccomobile1.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center bottom bottom;
+    background-color: #000;
+    padding-top: 70px;
+    min-height: 80vh;
+    width: 100%;
+  }
+
+  .app-text-box {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 30px 40px; 
+    border-radius: 12px;
+    color: white;
+    margin-top: -30px;
+    margin-left: 40px;
+    max-width: 450px; 
+  }
+  
+  
+  .section-title {
+    font-size: 1.8 rem; 
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-left: 15px;
+    margin-bottom: 15px;
+    color: #fff;
+  }
+  
+  .section-subtitle {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: #ddd;
+    text-align: center; 
+    margin-left: 15px;
+  }
+  
+  .button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center; 
+  } 
+  
+  .download-button {
+    font-weight: bold;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    width: 250px;
+    background-color: #28a745;
+    border: none;
+  }
+  
+  .github-button {
+    font-weight: bold;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    width: 250px;
+    background-color: #ffc107;
+    border: none;
+    color: black;
+  }

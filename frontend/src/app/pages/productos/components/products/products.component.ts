@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../../../../shared/interfaces/products.data';
+import { Product } from '../../../../core/interfaces/producto';
 import { ProductCardComponent } from '../product-card/product-card.component';
 import { CartService } from '../../../../core/services/cart.service';
 import { ProductoService } from '../../../../core/services/producto.service';
-import { DecimalFormatPipe } from '../../../../shared/pipes/decimal-format.pipe';
+
 
 @Component({
   selector: 'app-products',

@@ -1,4 +1,6 @@
 import { Injectable, signal } from '@angular/core';
+import { Cart } from '../interfaces/cart';
+import { CartItem } from '../interfaces/cart';
 
 @Injectable({
   providedIn: 'root',
@@ -76,19 +78,6 @@ export class CartService {
   }
 }
 
-export interface CartItem {
-  id_producto: string;
-  nombre_producto: string;
-  main_imagen: string;
-  precio: number;
-  quantity: number;
-}
-
-export interface Cart {
-  items: CartItem[];
-  count: number;
-  total: number;
-}
 
 
 

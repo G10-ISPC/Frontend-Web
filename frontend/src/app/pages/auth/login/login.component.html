@@ -1,0 +1,67 @@
+<main>
+  <div class="contenedor">
+    <div class="caja" id="form">
+      <form [formGroup]="loginForm" (ngSubmit)="login()" class="contenedor-ingreso" id="ingreso" autocomplete="off" autocorrect="off"
+      spellcheck="false">
+        <p class="text-danger">{{ loginError }}</p>
+        <div class="caja-titulo">
+          <h3>Bienvenido</h3>
+        </div>
+        <div class="grupo-inputs">
+          <!-- Campo para el email -->
+          <div class="campo-input">
+            <input type="text" formControlName="email" class="caja-input" id="logEmail" required autocomplete="off">
+            <label for="logEmail">E-mail</label>
+            <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="text-danger">
+              <div *ngIf="email?.errors?.['required']">
+                El email es obligatorio.
+              </div>
+              <div *ngIf="email?.errors?.['email']">
+                El email debe tener un formato válido.
+              </div>
+            </div>
+          </div>
+
+          <!-- Campo para la contraseña -->
+          <div class="campo-input">
+            <div class="input-group">
+              <input [type]="passwordFieldType" formControlName="password" class="caja-input" id="contrasenaIngreso" required autocomplete="new-password">
+              <label for="contrasenaIngreso">Contraseña</label>
+              <div class="input-group-append">
+                <span class="input-group-text" (click)="togglePasswordVisibility()">
+                  <i class="fa-solid fa-eye"></i> <!-- Ícono para ver/ocultar contraseña -->
+                </span>
+              </div>
+            </div>
+            <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="text-danger">
+              <!-- Mensajes de error para la contraseña -->
+              <div *ngIf="password?.errors?.['required']">
+                La contraseña es requerida.
+              </div>
+              <div *ngIf="password?.errors?.['minlength']">
+                La contraseña debe tener al menos 8 caracteres.
+              </div>
+              <div *ngIf="password?.errors?.['pattern']">
+                La contraseña debe contener al menos una letra mayúscula, un número y un carácter especial.
+              </div>
+            </div>
+          </div>
+
+          <!-- Botón de envío -->
+          <div class="campo-input">
+            <input type="submit" class="input-submit" value="Ingresar" id="submitButton">
+          </div>
+
+          <!-- Enlace para redirigir al registro -->
+          <a class="enlace" routerLink="/registro">¿No tenés cuenta aún? <b>Crear cuenta</b></a>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+
+<!-- Mensaje flotante después de login exitoso -->
+<div *ngIf="showWelcomeMessage" class="welcome-message">
+  {{ welcomeMessage }}
+</div>
+
