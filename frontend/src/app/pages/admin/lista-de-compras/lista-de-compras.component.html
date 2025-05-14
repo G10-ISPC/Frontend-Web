@@ -3,6 +3,7 @@
     <input type="text" class="form-control dark-input" [(ngModel)]="filtroUsuario" (input)="filtrarCompras()" placeholder="Buscar por usuario">
     <input type="text" class="form-control dark-input" [(ngModel)]="filtroProducto" (input)="filtrarCompras()" placeholder="Buscar por producto">
     <input type="date" class="form-control dark-input" [(ngModel)]="filtroFecha" (change)="filtrarCompras()">
+    <button class="btn btn-yellow btn-sm" (click)="limpiarFiltros()" [disabled]="!filtroUsuario && !filtroProducto && !filtroFecha">❌ Limpiar</button>
   </div>
 
   <div class="card dark-card">
@@ -25,7 +26,7 @@
           <ng-container *ngFor="let compra of comprasFiltradas.length ? comprasFiltradas : getCompra">
             <tr *ngFor="let detalle of compra.detalles">
               <td>{{ compra.user_first_name ? (compra.user_first_name + ' ' + compra.user_last_name) : 'Usuario no asignado' }}</td>
-              <td>{{ detalle.nombre_producto || 'Producto no disponible' }}</td>
+              <td>{{ generarDescripcionCompra(compra.detalles) }}</td>
               <td>{{ detalle.cantidad }}</td>
               <td>{{ compra.fecha ? (compra.fecha | date: 'yyyy-MM-dd') : 'Fecha no disponible' }}</td>
               <td>{{ detalle.precio_calculado }}</td>

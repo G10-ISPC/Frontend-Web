@@ -43,15 +43,45 @@ export class ListaDeComprasComponent implements OnInit {
     );
   }
 
-  filtrarCompras() {
-    this.comprasFiltradas = this.getCompra.filter(compra => {
-      return (
-        (!this.filtroUsuario || (compra.user_first_name?.toLowerCase().includes(this.filtroUsuario.toLowerCase()) ||
-        compra.user_last_name?.toLowerCase().includes(this.filtroUsuario.toLowerCase()))) &&
-        (!this.filtroFecha || new Date(compra.fecha).toISOString().split('T')[0] === this.filtroFecha) &&
-        (!this.filtroProducto || compra.detalles.some(detalle => detalle.nombre_producto?.toLowerCase().includes(this.filtroProducto.toLowerCase())))
-      );
+  generarDescripcionCompra(detalles: Detalle[]): string {
+    const conteo: { [nombre: string]: number } = {};
+    detalles.forEach(detalle => {
+      if (detalle.nombre_producto) {
+        conteo[detalle.nombre_producto] = (conteo[detalle.nombre_producto] || 0) + detalle.cantidad;
+      }
     });
+    return Object.entries(conteo)
+      .map(([nombre, cantidad]) => `${cantidad} ${nombre}`)
+      .join(', ');
+  }
+
+  filtrarCompras() {
+    const filtroProducto = this.filtroProducto.toLowerCase();
+    const filtroUsuario = this.filtroUsuario.toLowerCase();
+    const filtroFecha = this.filtroFecha;
+
+    this.comprasFiltradas = this.getCompra.filter(compra => {
+      // Genera la descripción de la compra con productos
+      const descripcion = this.generarDescripcionCompra(compra.detalles).toLowerCase();
+      
+      // Filtra por producto, usuario y fecha
+      const coincideConProducto = descripcion.includes(filtroProducto);
+      const coincideConUsuario = compra.user_first_name?.toLowerCase().includes(filtroUsuario) || 
+                                 compra.user_last_name?.toLowerCase().includes(filtroUsuario);
+      const coincideConFecha = filtroFecha ? new Date(compra.fecha).toISOString().split('T')[0] === filtroFecha : true;
+
+
+      // Retorna true si cumple con todos los filtros
+      return coincideConProducto && coincideConUsuario && coincideConFecha;
+    });
+
+  }
+
+  limpiarFiltros(): void {
+    this.filtroUsuario = '';
+    this.filtroProducto = '';
+    this.filtroFecha = '';
+    this.filtrarCompras();
   }
 
   exportarExcel(): void {
