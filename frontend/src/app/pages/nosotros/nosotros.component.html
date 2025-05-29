@@ -29,13 +29,13 @@
           <div class="card card-dev-custom h-100 text-center p-4">
             <img [src]="developer.fotoUrl" alt="{{ developer.name }}" class="card-img-top rounded-circle mx-auto border border-warning shadow-sm" width="100" />
             <div class="card-body">
-              <h5 class="card-title text-warning">{{ developer.name }}</h5>
+              <h3 class="card-title text-warning">{{ developer.name }}</h3>
               <p class="card-text">{{ developer.rol }}</p>
               <div class="d-flex justify-content-center gap-2 mt-3">
-                <a [href]="developer.redesSociales.linkedin" target="_blank" class="social-link">
+                <a [href]="developer.redesSociales.linkedin" target="_blank" class="social-link" [attr.aria-label]="'Perfil de LinkedIn de ' + developer.name">
                   <i class="fa fa-linkedin"></i>
                 </a>
-                <a [href]="developer.redesSociales.github" target="_blank" class="social-link">
+                <a [href]="developer.redesSociales.github" target="_blank" class="social-link" [attr.aria-label]="'Perfil de LinkedIn de ' + developer.name">
                   <i class="fa-brands fa-github"></i>
                 </a>
               </div>

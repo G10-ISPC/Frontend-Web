@@ -1,7 +1,7 @@
 <!-- TEMPLATE QUE MUESTRA LAS TARJETAS Y EL BOTON DE ENLACE AL CARRITO -->
 <main>
   <div tabindex="0" class="cartButton" routerLink="/cart">
-    <img  class="cartIcon" src="../assets/img/cart1.png">
+    <img  class="cartIcon" src="../assets/img/cart1.png" alt="Carrito de compras">
     <span class="cart-count">{{ count() }}</span>
     <span class="cart-total">${{ total() | number : "1.2-2" }}</span>
   </div>
