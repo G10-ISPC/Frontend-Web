@@ -52,12 +52,12 @@
       
       <div class="col-12 col-md-8">
         <label for="name" class="form-label text-light">Nombre del producto</label>
-        <input type="text" formControlName="nombre_producto" id="nombre" class="form-control bg-secondary text-light border-0" placeholder="Ingresa el nombre del producto nuevo">
+        <input type="text" formControlName="nombre_producto" id="nombre" class="form-control bg-secondary text-light border-0" placeholder="Ingresa el nombre del producto nuevo"aria-label="Nombre del producto">
       </div>
 
       <div class="col-12 col-md-8">
         <label for="main_imagen" class="form-label text-light">Foto del producto</label><br>
-        <input type="file" (change)="onFileSelected($event)" class="form-control bg-secondary text-light border-0" id="main_imagen">
+        <input type="file" (change)="onFileSelected($event)" class="form-control bg-secondary text-light border-0" id="main_imagen" aria-label="Foto del producto">
       </div>
 
       <div class="col-12 col-md-8">
@@ -67,7 +67,7 @@
 
       <div class="col-12 col-md-8">
         <label for="price" class="form-label text-light">Precio</label>
-        <input type="text" formControlName="precio" id="price" class="form-control bg-secondary text-light border-0" placeholder="Por Ejm: 2550">
+        <input type="text" formControlName="precio" id="price" class="form-control bg-secondary text-light border-0" placeholder="Por Ejm: 2550" aria-label="Precio del producto">
       </div>
 
       <div class="col-12 col-md-8 d-flex justify-content-end gap-2">
