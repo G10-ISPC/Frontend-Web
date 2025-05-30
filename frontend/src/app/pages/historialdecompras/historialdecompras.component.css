@@ -1,3 +1,28 @@
+html, body {
+  height: 100%;
+  background-color: #000000 !important;
+  margin: 0;
+  padding: 0;
+  color: #ffffff;
+}
+body > app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background-color: #000000 !important;
+}
+
+main, .main-content, .content-wrapper {
+  flex: 1;
+  background-color: #000000 !important;
+}
+
+.historial-card,
+.card-body {
+  background-color: #000000 !important;
+  color: #ffffff;
+}
+
 .card {
     background-color: #1a1a1a;
     border: 1px solid #ffcc00;
@@ -20,7 +45,7 @@
   }  
 
   .table {
-    background-color: transparent;
+    background-color:  #000000 !important;
     color: #f1f1f1;
     border-collapse: collapse;
     width: 100%;
@@ -29,8 +54,11 @@
   
   .table th,
   .table td {
+    background-color: #1f1f1f !important;
+    color: #ffcc00 !important;
     padding: 0.75rem 1rem;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid;
+    border-color: #333 !important;
     text-align: center;
   }
   
@@ -41,7 +69,7 @@
   }
   
   .table tr:hover {
-    background-color: rgba(255, 204, 0, 0.05);
+    background-color: rgba(255, 204, 0, 0.05) !important;
   }
   
   .btn-back,
