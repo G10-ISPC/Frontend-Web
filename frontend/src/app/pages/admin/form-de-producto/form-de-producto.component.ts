@@ -78,12 +78,24 @@ export class FormDeProductoComponent implements OnInit {
     }
   }
 
-  borrarData(event: any, id: string): void {
-    event.preventDefault();
-    this.productoService.deleteData(id).subscribe(() => {
-      this.products.update(products => products.filter(product => product.id_producto !== id));
+  borrarData(event: Event, producto: Product): void {
+  event.preventDefault();
+  const confirmDelete = confirm(`¿Está seguro que desea eliminar el producto "${producto.nombre_producto}"?`);
+
+  if (confirmDelete) {
+    this.productoService.deleteData(producto.id_producto).subscribe(() => {
+      this.products.update(products => products.filter(p => p.id_producto !== producto.id_producto));
     });
   }
+}
+ 
+
+  // borrarData(event: any, id: string): void {
+  //   event.preventDefault();
+  //   this.productoService.deleteData(id).subscribe(() => {
+  //     this.products.update(products => products.filter(product => product.id_producto !== id));
+  //   });
+  // }
 
   editProduct(producto: Product): void {
     this.form.patchValue({
