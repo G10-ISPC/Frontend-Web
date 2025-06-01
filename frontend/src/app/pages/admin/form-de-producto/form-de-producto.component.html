@@ -13,6 +13,7 @@
           <th>Foto</th>
           <th>Descripción</th>
           <th>Precio</th>
+          <th>Stock</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -25,6 +26,7 @@
             </td>
             <td>{{ producto.descripcion }}</td>
             <td>{{ producto.precio }}</td>
+            <td>{{ producto.stock }}</td> 
             <td>
               <button (click)="toggleVisibility(producto)" class="btn btn-sm btn-outline-light me-1" title="Visibilidad">
                 <i class="fa-solid" [ngClass]="producto.visible ? 'fa-eye' : 'fa-eye-slash'"></i>
@@ -69,6 +71,12 @@
         <label for="price" class="form-label text-light">Precio</label>
         <input type="text" formControlName="precio" id="price" class="form-control bg-secondary text-light border-0" placeholder="Por Ejm: 2550" aria-label="Precio del producto">
       </div>
+
+      <div class="col-12 col-md-8">
+        <label for="stock" class="form-label text-light">Stock Disponible</label>
+        <input type="number" formControlName="stock" id="stock" class="form-control bg-secondary text-light border-0" placeholder="Cantidad disponible" min="0">
+      </div>
+
 
       <div class="col-12 col-md-8 d-flex justify-content-end gap-2">
         <button type="submit" class="btn btn-outline-light">

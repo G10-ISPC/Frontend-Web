@@ -28,7 +28,8 @@ export class FormDeProductoComponent implements OnInit {
       nombre_producto: ['', Validators.required],
       descripcion: ['', Validators.required],
       precio: ['', Validators.required],
-      imagenUrl: ['']
+      imagenUrl: [''],
+      stock: ['', [Validators.required, Validators.min(0)]], 
     });
   }
 
@@ -59,6 +60,7 @@ export class FormDeProductoComponent implements OnInit {
       formData.append('nombre_producto', this.form.get('nombre_producto')?.value);
       formData.append('descripcion', this.form.get('descripcion')?.value);
       formData.append('precio', this.form.get('precio')?.value);
+      formData.append('stock', this.form.get('stock')?.value); 
       if (this.selectedFile) {
         formData.append('main_imagen', this.selectedFile);
       }
@@ -101,7 +103,8 @@ export class FormDeProductoComponent implements OnInit {
     this.form.patchValue({
       nombre_producto: producto.nombre_producto,
       descripcion: producto.descripcion,
-      precio: producto.precio
+      precio: producto.precio,
+      stock: producto.stock
     });
     this.productoEnEdicion = Number(producto.id_producto);
     this.showForm = true;
