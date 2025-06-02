@@ -3,7 +3,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #000000 !important;
+    /* background-color: #000000 !important; */
   }
   
   app-root {
