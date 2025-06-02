@@ -120,3 +120,45 @@ main, .main-content, .content-wrapper {
     color: #cccccc;
   }
   
+
+  /* MODAL CONFIRMACIÓN DE CANCELACIÓN DE COMPRA*/
+
+.custom-modal-dark {
+  background-color: #0c0101;
+  color: #ffcc00;
+  border: 1px solid #ffcc00;
+  border-radius: 10px;
+}
+
+.custom-modal-dark .modal-header {
+  border-bottom: 1px solid #0c0101;
+}
+
+.custom-modal-dark .modal-footer {
+  border-top: 1px solid #0c0101;
+}
+
+.custom-modal-dark .btn-danger {
+  background-color: #cc0000;
+  border: none;
+  color: #fff;
+}
+
+.custom-modal-dark .btn-danger:hover {
+  background-color: #990000;
+}
+
+.custom-modal-dark .btn-secondary {
+  background-color: #444;
+  border: none;
+  color: #fff;
+}
+
+.custom-modal-dark .btn-secondary:hover {
+  background-color: #666;
+}
+
+
+.custom-modal-dark .btn-close {
+  filter: invert(1);
+}

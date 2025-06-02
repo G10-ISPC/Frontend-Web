@@ -11,6 +11,8 @@ import { CompraService } from '../../core/services/compra.service';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CancelarPedidoResponse } from '../../core/interfaces/cancelaPedidoResponse';
+import { ViewChild, ElementRef } from '@angular/core';
+import { Modal } from 'bootstrap'; // Asegurate de tener Bootstrap JS cargado
 
 @Component({
   selector: 'app-historialdecompras',
@@ -22,6 +24,14 @@ import { CancelarPedidoResponse } from '../../core/interfaces/cancelaPedidoRespo
 export class HistorialdecomprasComponent implements OnInit {
   temporizadores: { [id: number]: string } = {};
 [x: string]: any;
+
+
+@ViewChild('modalCancelacion') modalCancelacion!: ElementRef;
+modalInstance: any;
+idCompraParaCancelar: number | null = null;
+
+
+
   getDetalle: Detalle[] = [];
   getCompra: Compra[] = [];  
   private intervalosActivos: { [id: number]: any } = {};
@@ -81,20 +91,25 @@ export class HistorialdecomprasComponent implements OnInit {
   
 
   cancelarPedido(id: number): void {
-    this.http.post<CancelarPedidoResponse>(`http://localhost:8000/api/cancelar-compra/${id}/`, {})
-.subscribe(
-      (response) => {
-        if (response.mensaje) {
-          console.log("✅", response.mensaje);
-          this.obtenerCompras(); // Recargar la lista
-        } else if (response.error) {
-          console.warn("⚠️", response.error);
-        }
-      },
-      (error) => {
-        console.error("❌ Error en la solicitud HTTP", error);
-      }
-    );
+//     this.http.post<CancelarPedidoResponse>(`http://localhost:8000/api/cancelar-compra/${id}/`, {})
+// .subscribe(
+//       (response) => {
+//         if (response.mensaje) {
+//           console.log("✅", response.mensaje);
+//           this.obtenerCompras(); // Recargar la lista
+//         } else if (response.error) {
+//           console.warn("⚠️", response.error);
+//         }
+//       },
+//       (error) => {
+//         console.error("❌ Error en la solicitud HTTP", error);
+//       }
+//     );
+
+this.idCompraParaCancelar = id;
+  const modalElement = this.modalCancelacion.nativeElement;
+  this.modalInstance = new Modal(modalElement);
+  this.modalInstance.show();
   }
 
   iniciarTemporizadores(): void {
@@ -103,11 +118,11 @@ export class HistorialdecomprasComponent implements OnInit {
     this.temporizadores = {};
     this.intervalosActivos = {};
   
-    this.getCompra.forEach(compra => {
-      console.log(`🧾 Compra ID ${compra.id_compra}`);
-      console.log(`Estado: ${compra.estado}`);
-      console.log(`Cancelable hasta: ${compra.cancelable_hasta}`);
-      console.log(`¿Mostrar botón?: ${this.mostrarBotonCancelar(compra)}`);
+      this.getCompra.forEach(compra => {
+        console.log(`🧾 Compra ID ${compra.id_compra}`);
+        console.log(`Estado: ${compra.estado}`);
+        console.log(`Cancelable hasta: ${compra.cancelable_hasta}`);
+        console.log(`¿Mostrar botón?: ${this.mostrarBotonCancelar(compra)}`);
 
       if (compra.cancelable_hasta && this.mostrarBotonCancelar(compra)) {
         const id = compra.id_compra!;
@@ -120,7 +135,7 @@ export class HistorialdecomprasComponent implements OnInit {
             // Actualizar el estado a "En preparación" cuando se acabe el tiempo
             this.actualizarEstadoCompra(id, 'preparacion');
           } else {
-            const minutos = Math.floor(tiempoRestante / 60000);
+            const minutos = Math.floor(tiempoRestante / 60000);     
             const segundos = Math.floor((tiempoRestante % 60000) / 1000);
             this.temporizadores[id] = `${minutos}:${segundos.toString().padStart(1, '0')} restantes`;
           }
@@ -183,5 +198,27 @@ actualizarEstadoCompra(id: number, nuevoEstado: string): void {
   }
 }
 
-   
+
+  confirmarCancelacion(): void {
+    if (this.idCompraParaCancelar !== null) {
+      this.http.post<CancelarPedidoResponse>(
+        `http://localhost:8000/api/cancelar-compra/${this.idCompraParaCancelar}/`,
+        {}
+      ).subscribe(
+        (response) => {
+          if (response.mensaje) {
+            console.log("✅", response.mensaje);
+            this.obtenerCompras(); // Recargar la lista
+          } else if (response.error) {
+            console.warn("⚠️", response.error);
+          }
+          this.modalInstance.hide(); // Oculta el modal después de la acción
+        },
+        (error) => {
+          console.error("❌ Error en la solicitud HTTP", error);
+          this.modalInstance.hide();
+        }
+      );
+    }
+  }
 }
