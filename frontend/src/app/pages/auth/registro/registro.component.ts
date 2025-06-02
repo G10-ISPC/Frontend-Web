@@ -8,7 +8,7 @@ import { Router, RouterLink } from '@angular/router';
 import { usuario } from '../../../core/interfaces/usuario';
 import { RegistroService } from '../../../core/services/registro.service';
 
-const letrasPattern = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ]*$/;
+const letrasPattern = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/;
 const phonePattern = /^\d{10,15}$/;
 const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()\-_=+{};:,<.>])[A-Za-z0-9!@#$%^&*()\-_=+{};:,<.>]{8,}$/; 
 

@@ -102,4 +102,8 @@ export class ListaDeComprasComponent implements OnInit {
 
     XLSX.writeFile(libro, 'compras_filtradas.xlsx');
   }
+  sumarCantidadTotal(detalles: Detalle[]): number {
+  return detalles.reduce((total, d) => total + d.cantidad, 0);
+}
+
 }
