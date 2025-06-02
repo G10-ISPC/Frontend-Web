@@ -166,7 +166,7 @@ export class LogService {
   }
   
   deleteUserAccount(): Observable<any> {
-    return this.http.delete(this.PROFILE_URL, {
+    return this.http.delete('api/desactivar-cuenta/', {
       headers: new HttpHeaders().set('Authorization', `Bearer ${this.getToken()}`)
     }).pipe(
       catchError(error => {
