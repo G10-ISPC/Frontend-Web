@@ -22,8 +22,8 @@
             <th>Precio</th>
           </tr>
         </thead>
-        <tbody>
-  <tr *ngFor="let compra of comprasFiltradas.length ? comprasFiltradas : getCompra">
+        <tbody *ngIf="(filtroUsuario || filtroProducto || filtroFecha) ? comprasFiltradas.length > 0 : getCompra.length > 0">
+  <tr *ngFor="let compra of (filtroUsuario || filtroProducto || filtroFecha) ? comprasFiltradas : getCompra">
     <td>{{ compra.user_first_name ? (compra.user_first_name + ' ' + compra.user_last_name) : 'Usuario no asignado' }}</td>
     <td>{{ generarDescripcionCompra(compra.detalles) }}</td>
     <td>{{ sumarCantidadTotal(compra.detalles) }}</td>
@@ -33,9 +33,14 @@
 </tbody>
       </table>
 
-      <div *ngIf="!getCompra || getCompra.length === 0" class="text-center mt-4">
-        <p>No hay compras disponibles.</p>
+      <div *ngIf="(comprasFiltradas.length === 0 && (filtroUsuario || filtroProducto || filtroFecha))" class="text-center mt-4">
+      <p>No hay resultados para los filtros aplicados.</p>
       </div>
+
+      <div *ngIf="!getCompra || getCompra.length === 0" class="text-center mt-4">
+      <p>No hay compras disponibles.</p>
+      </div>
+
     </div>
   </div>
 </div>
