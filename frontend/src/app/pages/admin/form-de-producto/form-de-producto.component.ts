@@ -28,7 +28,8 @@ export class FormDeProductoComponent implements OnInit {
       nombre_producto: ['', Validators.required],
       descripcion: ['', Validators.required],
       precio: ['', Validators.required],
-      imagenUrl: ['']
+      imagenUrl: [''],
+      stock: ['', [Validators.required, Validators.min(0)]], 
     });
   }
 
@@ -59,6 +60,7 @@ export class FormDeProductoComponent implements OnInit {
       formData.append('nombre_producto', this.form.get('nombre_producto')?.value);
       formData.append('descripcion', this.form.get('descripcion')?.value);
       formData.append('precio', this.form.get('precio')?.value);
+      formData.append('stock', this.form.get('stock')?.value); 
       if (this.selectedFile) {
         formData.append('main_imagen', this.selectedFile);
       }
@@ -78,18 +80,31 @@ export class FormDeProductoComponent implements OnInit {
     }
   }
 
-  borrarData(event: any, id: string): void {
-    event.preventDefault();
-    this.productoService.deleteData(id).subscribe(() => {
-      this.products.update(products => products.filter(product => product.id_producto !== id));
+  borrarData(event: Event, producto: Product): void {
+  event.preventDefault();
+  const confirmDelete = confirm(`¿Está seguro que desea eliminar el producto "${producto.nombre_producto}"?`);
+
+  if (confirmDelete) {
+    this.productoService.deleteData(producto.id_producto).subscribe(() => {
+      this.products.update(products => products.filter(p => p.id_producto !== producto.id_producto));
     });
   }
+}
+ 
+
+  // borrarData(event: any, id: string): void {
+  //   event.preventDefault();
+  //   this.productoService.deleteData(id).subscribe(() => {
+  //     this.products.update(products => products.filter(product => product.id_producto !== id));
+  //   });
+  // }
 
   editProduct(producto: Product): void {
     this.form.patchValue({
       nombre_producto: producto.nombre_producto,
       descripcion: producto.descripcion,
-      precio: producto.precio
+      precio: producto.precio,
+      stock: producto.stock
     });
     this.productoEnEdicion = Number(producto.id_producto);
     this.showForm = true;

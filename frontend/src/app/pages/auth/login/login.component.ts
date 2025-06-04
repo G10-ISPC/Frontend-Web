@@ -95,7 +95,7 @@ export class LoginComponent implements OnInit {
           setTimeout(() => {
             this.showWelcomeMessage = false;
             this.router.navigateByUrl('/home');
-          }, 3000);
+          }, 1000);
           this.loginForm.reset();
           this.resetLoginAttempts(); 
         },

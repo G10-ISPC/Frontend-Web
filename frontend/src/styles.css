@@ -1,8 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    /* background-color: #000000 !important; */
   }
   
   app-root {
@@ -10,8 +11,6 @@ body {
     flex-direction: column;
     flex: 1;
   }
-
-
 
   .app-download-section {
     background-image: url('/assets/img/riccomobile1.png');

@@ -56,25 +56,24 @@ export class ListaDeComprasComponent implements OnInit {
   }
 
   filtrarCompras() {
-    const filtroProducto = this.filtroProducto.toLowerCase();
-    const filtroUsuario = this.filtroUsuario.toLowerCase();
-    const filtroFecha = this.filtroFecha;
-
     this.comprasFiltradas = this.getCompra.filter(compra => {
-      // Genera la descripción de la compra con productos
-      const descripcion = this.generarDescripcionCompra(compra.detalles).toLowerCase();
-      
-      // Filtra por producto, usuario y fecha
-      const coincideConProducto = descripcion.includes(filtroProducto);
-      const coincideConUsuario = compra.user_first_name?.toLowerCase().includes(filtroUsuario) || 
-                                 compra.user_last_name?.toLowerCase().includes(filtroUsuario);
-      const coincideConFecha = filtroFecha ? new Date(compra.fecha).toISOString().split('T')[0] === filtroFecha : true;
+      const usuarioCoincide =
+        !this.filtroUsuario ||
+        (compra.user_first_name?.toLowerCase().includes(this.filtroUsuario.toLowerCase()) ||
+         compra.user_last_name?.toLowerCase().includes(this.filtroUsuario.toLowerCase()));
 
+      const fechaCoincide =
+        !this.filtroFecha ||
+        new Date(compra.fecha).toISOString().split('T')[0] === this.filtroFecha;
 
-      // Retorna true si cumple con todos los filtros
-      return coincideConProducto && coincideConUsuario && coincideConFecha;
+      const productoCoincide =
+        !this.filtroProducto ||
+        compra.detalles.some(detalle =>
+          detalle.nombre_producto?.toLowerCase().includes(this.filtroProducto.toLowerCase())
+        );
+
+      return usuarioCoincide && fechaCoincide && productoCoincide;
     });
-
   }
 
   limpiarFiltros(): void {
@@ -102,4 +101,8 @@ export class ListaDeComprasComponent implements OnInit {
 
     XLSX.writeFile(libro, 'compras_filtradas.xlsx');
   }
+  sumarCantidadTotal(detalles: Detalle[]): number {
+  return detalles.reduce((total, d) => total + d.cantidad, 0);
+}
+
 }

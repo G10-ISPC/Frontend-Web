@@ -118,3 +118,12 @@ table.table td a.edit {
 table.table td a.delete {
     color: #E34724;
 }
+:focus-visible {
+  outline: 2px solid #ffc107; /* Amarillo visible */
+  outline-offset: 2px;
+}
+.cartButton:focus-visible {
+  outline: 3px solid #ffc107;
+  outline-offset: 4px;
+  box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.4); /* sombra de foco suave */
+}

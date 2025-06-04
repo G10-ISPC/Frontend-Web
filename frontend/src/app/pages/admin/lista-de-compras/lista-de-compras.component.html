@@ -2,13 +2,13 @@
   <div class="filters mb-4 d-flex gap-3">
     <input type="text" class="form-control dark-input" [(ngModel)]="filtroUsuario" (input)="filtrarCompras()" placeholder="Buscar por usuario">
     <input type="text" class="form-control dark-input" [(ngModel)]="filtroProducto" (input)="filtrarCompras()" placeholder="Buscar por producto">
-    <input type="date" class="form-control dark-input" [(ngModel)]="filtroFecha" (change)="filtrarCompras()">
+    <input type="date" class="form-control dark-input" [(ngModel)]="filtroFecha" (change)="filtrarCompras()" aria-label="Filtro por Fecha">
     <button class="btn btn-yellow btn-sm" (click)="limpiarFiltros()" [disabled]="!filtroUsuario && !filtroProducto && !filtroFecha">❌ Limpiar</button>
   </div>
 
   <div class="card dark-card">
     <div class="card-header d-flex justify-content-between align-items-center bg-dark text-white">
-      <h5>Historial de Compras</h5>
+      <h3>Historial de Compras</h3>
       <button class="btn btn-yellow btn-sm" (click)="exportarExcel()">📥 Exportar</button>
     </div>
     <div class="card-body">
@@ -22,22 +22,25 @@
             <th>Precio</th>
           </tr>
         </thead>
-        <tbody>
-          <ng-container *ngFor="let compra of comprasFiltradas.length ? comprasFiltradas : getCompra">
-            <tr *ngFor="let detalle of compra.detalles">
-              <td>{{ compra.user_first_name ? (compra.user_first_name + ' ' + compra.user_last_name) : 'Usuario no asignado' }}</td>
-              <td>{{ generarDescripcionCompra(compra.detalles) }}</td>
-              <td>{{ detalle.cantidad }}</td>
-              <td>{{ compra.fecha ? (compra.fecha | date: 'yyyy-MM-dd') : 'Fecha no disponible' }}</td>
-              <td>{{ detalle.precio_calculado }}</td>
-            </tr>
-          </ng-container>
-        </tbody>
+        <tbody *ngIf="(filtroUsuario || filtroProducto || filtroFecha) ? comprasFiltradas.length > 0 : getCompra.length > 0">
+  <tr *ngFor="let compra of (filtroUsuario || filtroProducto || filtroFecha) ? comprasFiltradas : getCompra">
+    <td>{{ compra.user_first_name ? (compra.user_first_name + ' ' + compra.user_last_name) : 'Usuario no asignado' }}</td>
+    <td>{{ generarDescripcionCompra(compra.detalles) }}</td>
+    <td>{{ sumarCantidadTotal(compra.detalles) }}</td>
+    <td>{{ compra.fecha ? (compra.fecha | date: 'yyyy-MM-dd') : 'Fecha no disponible' }}</td>
+    <td>{{ compra.precio_total }}</td>
+  </tr>
+</tbody>
       </table>
 
-      <div *ngIf="!getCompra || getCompra.length === 0" class="text-center mt-4">
-        <p>No hay compras disponibles.</p>
+      <div *ngIf="(comprasFiltradas.length === 0 && (filtroUsuario || filtroProducto || filtroFecha))" class="text-center mt-4">
+      <p>No hay resultados para los filtros aplicados.</p>
       </div>
+
+      <div *ngIf="!getCompra || getCompra.length === 0" class="text-center mt-4">
+      <p>No hay compras disponibles.</p>
+      </div>
+
     </div>
   </div>
 </div>

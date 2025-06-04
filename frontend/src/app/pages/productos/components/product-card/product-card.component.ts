@@ -20,6 +20,10 @@ export class ProductCardComponent {
   constructor(private cartService: CartService) {}
 
   onAdd(product: Product) {
+    if (product.stock === 0) {
+    alert("Producto sin stock"); 
+    return;
+  }
     this.cartService.addItem({
       id_producto: product.id_producto,
       nombre_producto: product.nombre_producto,
@@ -27,6 +31,9 @@ export class ProductCardComponent {
       precio: product.precio,
       quantity: 1,
     }); 
+
+    product.stock -= 1;
+    
   }
   get imageUrl(): string {
     const url = this.product.main_imagen;
@@ -36,5 +43,5 @@ export class ProductCardComponent {
     return `http://localhost:8000/${url}`;
   }
   
-  
+
 }
