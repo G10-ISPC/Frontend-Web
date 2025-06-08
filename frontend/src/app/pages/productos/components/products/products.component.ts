@@ -23,18 +23,23 @@ export class ProductsComponent implements OnInit {
   ngOnInit() {
     this.productoService.obtenerCard().subscribe(
       (data: Product[]) => {
-        this.products = data.filter(producto => producto.visible); 
+        this.products = data.filter(producto => producto.visible);
 
         this.products = this.products.map(producto => {
           if (!producto.id_producto) {
-            producto.id_producto = this.generateUniqueId(); 
+            producto.id_producto = this.generateUniqueId();
           }
           console.log('Tipo y valor de precio:', typeof producto.precio, producto.precio);
           if (typeof producto.precio !== 'number') {
             console.warn('Producto con precio inválido en el componente:', producto);
-            producto.precio = parseFloat(producto.precio) || 0;
+            producto.precio = parseFloat(producto.precio as any) || 0;
           }
-        
+
+          if (typeof producto.stock !== 'number') {
+              console.warn('Producto con stock inválido en el componente:', producto);
+              producto.stock = parseFloat(producto.stock as any) || 0;
+          }
+
           return producto;
         });
 
@@ -46,17 +51,28 @@ export class ProductsComponent implements OnInit {
     );
   }
 
-  
+
   generateUniqueId(): string {
     return '_' + Math.random().toString(36).substr(2, 9);
   }
+
   onAdd(product: Product) {
-    this.cartService.addItem({
+    if (product.stock === 0) {
+      alert("Producto sin stock");
+      return;
+    }
+
+    const added = this.cartService.addItem({
       id_producto: product.id_producto,
       nombre_producto: product.nombre_producto,
       main_imagen: product.main_imagen,
       precio: product.precio,
       quantity: 1,
+      stock: product.stock
     });
+
+    if (!added) {
+      alert(`No se pudo agregar mas "${product.nombre_producto}" al carrito. Stock insuficiente.`);
+    }
   }
 }
