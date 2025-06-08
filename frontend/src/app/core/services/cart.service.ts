@@ -1,6 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { Cart } from '../interfaces/cart';
-import { CartItem } from '../interfaces/cart';
+import { Cart, CartItem } from '../interfaces/cart';
 
 @Injectable({
   providedIn: 'root',
@@ -22,63 +21,80 @@ export class CartService {
 
   constructor() {}
 
-  addItem(item: CartItem) {
-    const itemObj = this.cart().items.find((t) => t.id_producto === item.id_producto);
-    if (itemObj) {
-      this.increaseItem(itemObj);
+  addItem(item: CartItem): boolean {
+    const itemInCart = this.cart().items.find((t) => t.id_producto === item.id_producto);
+
+    if (itemInCart) {
+      return this.updateItemQuantity(itemInCart.id_producto, itemInCart.quantity + 1);
     } else {
-      this.cart.update((prevCart) => ({
-        ...prevCart,
-        items: [...prevCart.items, item],
-        count: prevCart.count + 1,
-        total: prevCart.total + item.precio,
-      }));
+      if (item.stock && item.stock >= 1) {
+        this.cart.update((prevCart) => ({
+          ...prevCart,
+          items: [...prevCart.items, { ...item, quantity: 1 }],
+          count: prevCart.count + 1,
+          total: prevCart.total + item.precio,
+        }));
+        return true;
+      } else {
+        console.warn(`No se puede agregar el producto ${item.nombre_producto}: No hay stock disponible.`);
+        return false;
+      }
     }
   }
 
-  increaseItem(item: CartItem) {
+  updateItemQuantity(productId: string, newQuantity: number): boolean {
+    let success = false;
     this.cart.update((prevCart) => {
-      const newCart = {
-        ...prevCart,
-        items: [...prevCart.items],
-      };
-      const itemObj = newCart.items.find((t) => t.id_producto === item.id_producto);
-      itemObj!.quantity = itemObj!.quantity + 1;
-      newCart.count++;
-      newCart.total += itemObj!.precio;
+      const newCart = { ...prevCart };
+      const itemIndex = newCart.items.findIndex(t => t.id_producto === productId);
+
+      if (itemIndex > -1) {
+        const itemObj = { ...newCart.items[itemIndex] };
+
+        if (newQuantity <= 0) {
+          success = true;
+          return this.removeItemInternal(prevCart, itemObj);
+        } else if (newQuantity <= itemObj.stock) {
+          const quantityChange = newQuantity - itemObj.quantity;
+
+          itemObj.quantity = newQuantity;
+          newCart.items[itemIndex] = itemObj;
+
+          newCart.count += quantityChange;
+          newCart.total += quantityChange * itemObj.precio;
+          success = true;
+        } else {
+          console.warn(`No se puede establecer la cantidad del producto ${itemObj.nombre_producto} a ${newQuantity}. Stock máximo disponible: ${itemObj.stock}.`);
+          success = false;
+        }
+      } else {
+        console.warn(`Producto con ID ${productId} no encontrado en el carrito.`);
+        success = false;
+      }
       return newCart;
     });
+    return success;
   }
 
-  decreaseItem(item: CartItem) {
-    this.cart.update((prevCart) => {
-      const newCart = {
-        ...prevCart,
-        items: [...prevCart.items],
-      };
-      const itemObj = newCart.items.find((t) => t.id_producto === item.id_producto);
-      itemObj!.quantity = itemObj!.quantity - 1;
-      newCart.count--;
-      newCart.total -= itemObj!.precio;
-      return newCart;
-    });
+  increaseItem(item: CartItem): boolean {
+    return this.updateItemQuantity(item.id_producto, item.quantity + 1);
+  }
+
+  decreaseItem(item: CartItem): boolean {
+    return this.updateItemQuantity(item.id_producto, item.quantity - 1);
   }
 
   removeItem(item: CartItem) {
-    this.cart.update((prevCart) => {
+    this.cart.update((prevCart) => this.removeItemInternal(prevCart, item));
+  }
+
+  private removeItemInternal(prevCart: Cart, itemToRemove: CartItem): Cart {
       const newCart = {
-        ...prevCart,
-        items: [...prevCart.items.filter((t) => t.id_producto !== item.id_producto)],
+          ...prevCart,
+          items: [...prevCart.items.filter((t) => t.id_producto !== itemToRemove.id_producto)],
       };
-      const itemObj = prevCart.items.find((t) => t.id_producto === item.id_producto);
-      newCart.count -= itemObj!.quantity;
-      newCart.total -= itemObj!.precio * itemObj!.quantity;
+      newCart.count -= itemToRemove.quantity;
+      newCart.total -= itemToRemove.precio * itemToRemove.quantity;
       return newCart;
-    });
   }
 }
-
-
-
-
-

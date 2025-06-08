@@ -21,27 +21,31 @@ export class ProductCardComponent {
 
   onAdd(product: Product) {
     if (product.stock === 0) {
-    alert("Producto sin stock"); 
-    return;
-  }
-    this.cartService.addItem({
+      alert("Producto sin stock");
+      return;
+    }
+
+    const cartItem = {
       id_producto: product.id_producto,
       nombre_producto: product.nombre_producto,
       main_imagen: product.main_imagen,
       precio: product.precio,
       quantity: 1,
-    }); 
+      stock: product.stock
+    };
 
-    product.stock -= 1;
-    
+    const added = this.cartService.addItem(cartItem);
+
+    if (!added) {
+      alert(`No se pudo agregar "${product.nombre_producto}" al carrito. Stock insuficiente.`);
+    }
   }
+
   get imageUrl(): string {
     const url = this.product.main_imagen;
     if (url.startsWith('http')) {
-      return url; 
+      return url;
     }
     return `http://localhost:8000/${url}`;
   }
-  
-
 }
