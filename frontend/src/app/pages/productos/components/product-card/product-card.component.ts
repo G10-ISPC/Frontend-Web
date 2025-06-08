@@ -37,7 +37,7 @@ export class ProductCardComponent {
     const added = this.cartService.addItem(cartItem);
 
     if (!added) {
-      alert(`No se pudo agregar "${product.nombre_producto}" al carrito. Stock insuficiente.`);
+      alert(`No se pudo agregar mas "${product.nombre_producto}" al carrito. Stock insuficiente.`);
     }
   }
 
