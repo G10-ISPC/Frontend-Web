@@ -18,4 +18,16 @@ export class CompraGralService {
       }
     });
   }
+  cambiarEstado(id: number, nuevoEstado: string) {
+  const token = localStorage.getItem('access_token') || '';
+  return this.http.patch<{ mensaje: string }>(
+    `http://localhost:8000/api/compra/${id}/cambiar-estado/`,
+    { estado: nuevoEstado },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+}
 }
