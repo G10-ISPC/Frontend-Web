@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Compra } from '../../../core/interfaces/compra';
-import { Detalle } from '../../../core/interfaces/detalle';
-import { DetalleService } from '../../../core/services/detalle.service';
 import { CompraGralService } from '../../../core/services/compra-gral.service';
 import * as XLSX from 'xlsx';
 
@@ -21,10 +19,7 @@ export class ListaDeComprasComponent implements OnInit {
   filtroFecha: string = '';
   filtroProducto: string = '';
 
-  constructor(
-    private detalleService: DetalleService,
-    private compraGralService: CompraGralService
-  ) {}
+  constructor(private compraGralService: CompraGralService) {}
 
   ngOnInit(): void {
     this.obtenerTodasLasCompras();
@@ -43,19 +38,7 @@ export class ListaDeComprasComponent implements OnInit {
     );
   }
 
-  generarDescripcionCompra(detalles: Detalle[]): string {
-    const conteo: { [nombre: string]: number } = {};
-    detalles.forEach(detalle => {
-      if (detalle.nombre_producto) {
-        conteo[detalle.nombre_producto] = (conteo[detalle.nombre_producto] || 0) + detalle.cantidad;
-      }
-    });
-    return Object.entries(conteo)
-      .map(([nombre, cantidad]) => `${cantidad} ${nombre}`)
-      .join(', ');
-  }
-
-  filtrarCompras() {
+  filtrarCompras(): void {
     this.comprasFiltradas = this.getCompra.filter(compra => {
       const usuarioCoincide =
         !this.filtroUsuario ||
@@ -68,9 +51,7 @@ export class ListaDeComprasComponent implements OnInit {
 
       const productoCoincide =
         !this.filtroProducto ||
-        compra.detalles.some(detalle =>
-          detalle.nombre_producto?.toLowerCase().includes(this.filtroProducto.toLowerCase())
-        );
+        (compra.descripcion?.toLowerCase().includes(this.filtroProducto.toLowerCase()));
 
       return usuarioCoincide && fechaCoincide && productoCoincide;
     });
@@ -88,11 +69,10 @@ export class ListaDeComprasComponent implements OnInit {
     const datosAExportar = this.comprasFiltradas.length > 0 ? this.comprasFiltradas : this.getCompra;
 
     const datos = datosAExportar.map(compra => ({
-      Usuario: `${compra.user_first_name ?? ''} ${compra.user_last_name ?? ''}`,
-      Producto: compra.detalles.map(detalle => detalle.nombre_producto).join(', '),
-      Cantidad: compra.detalles.map(detalle => detalle.cantidad).join(', '),
-      Fecha: new Date(compra.fecha).toISOString().split('T')[0],
-      Precio: compra.detalles.map(detalle => detalle.precio_calculado).join(', ')
+      Usuario: `${compra.user_first_name ?? ''} ${compra.user_last_name ?? ''}`.trim(),
+      Productos: compra.descripcion || 'Sin descripción',
+      Fecha: compra.fecha ? new Date(compra.fecha).toISOString().split('T')[0] : '',
+      Precio: compra.precio_total
     }));
 
     const hoja = XLSX.utils.json_to_sheet(datos);
@@ -101,8 +81,39 @@ export class ListaDeComprasComponent implements OnInit {
 
     XLSX.writeFile(libro, 'compras_filtradas.xlsx');
   }
-  sumarCantidadTotal(detalles: Detalle[]): number {
-  return detalles.reduce((total, d) => total + d.cantidad, 0);
-}
 
+  cambiarEstado(compra: Compra): void {
+    if (!compra.id_compra || !compra.estado) {
+      alert('Faltan datos para actualizar el estado.');
+      return;
+    }
+
+    this.compraGralService.cambiarEstado(compra.id_compra, compra.estado).subscribe({
+      next: () => {
+        this.obtenerTodasLasCompras();
+      },
+      error: (err) => {
+        console.error('Error al actualizar el estado:', err);
+        alert('Hubo un error al actualizar el estado.');
+      }
+    });
+  }
+
+  guardarNuevoEstado(compra: Compra): void {
+    if (!compra.id_compra || !compra.nuevoEstado) {
+      alert('Debe seleccionar un nuevo estado antes de guardar.');
+      return;
+    }
+
+    this.compraGralService.cambiarEstado(compra.id_compra, compra.nuevoEstado).subscribe({
+      next: () => {
+        alert('Estado actualizado con éxito ✅');
+        this.obtenerTodasLasCompras();
+      },
+      error: (err) => {
+        console.error('Error al actualizar estado:', err);
+        alert('❌ Hubo un error al actualizar el estado.');
+      }
+    });
+  }
 }
