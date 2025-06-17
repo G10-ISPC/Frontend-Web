@@ -1,5 +1,4 @@
 import { Component, computed } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { CartService } from '../../core/services/cart.service';
 import { CartItemCardComponent } from './components/cart-item-card/cart-item-card.component';
 import { HttpClient } from '@angular/common/http';  
@@ -65,8 +64,16 @@ export class CartComponent {
       (response) => {
        
         if (response.init_point) {
-          window.location.href = response.init_point; 
-        }
+          // 🌐 3. Abrir Mercado Pago en otra pestaña
+        window.open(response.init_point, '_blank');
+          // 🧹 1. Vaciar carrito
+        this.cartService.clearCart();
+
+        // 🧭 2. Redirigir a historial de compras
+        window.location.href = 'http://localhost:4200/historialdecompras';
+
+        
+          }
         
       },
       (error) => {

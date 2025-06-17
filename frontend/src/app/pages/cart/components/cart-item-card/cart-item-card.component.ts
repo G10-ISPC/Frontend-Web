@@ -1,8 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CartService } from '../../../../core/services/cart.service';
 import { AmountAdjusterComponent } from "../amount-adjuster/amount-adjuster.component";
-import { CartComponent } from '../../cart.component';
-import { DecimalFormatPipe } from '../../../../core/pipes/decimal-format.pipe';
 import { CartItem } from '../../../../core/interfaces/cart';
 
 
@@ -11,7 +8,7 @@ import { CartItem } from '../../../../core/interfaces/cart';
     standalone: true,
     templateUrl: './cart-item-card.component.html',
     styleUrl: './cart-item-card.component.css',
-    imports: [DecimalFormatPipe , AmountAdjusterComponent, CartComponent]  
+    imports: [ AmountAdjusterComponent]  
 })
 
 export class CartItemCardComponent {
