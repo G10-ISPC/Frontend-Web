@@ -1,92 +1,139 @@
-div h1 {
-    display: flex;
-    justify-content: center;
-}
 .container {
-    @media (min-width: 760px) {
-        padding: 40px 200px;
-    }
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
-.empty-card {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 155px;
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
 }
+
+.header h1 {
+  font-size: 34px;
+  margin-bottom: 5px;
+}
+
+
+
 .main {
-    width: 100%;
-    display: grid;
-    grid-template-columns: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .main {
+    flex-direction: row;
+  }
+  
+  .items-container {
+    flex: 2;
+  }
+  
+  .right-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     gap: 20px;
-    padding: 40px 0px;
-    cursor: default;
-    @media (min-width: 1024px) {
-        grid-template-columns: 65% 35%;
-    }
-    @media (max-width: 759px) {
-        grid-template-columns: 100% ; 
-        gap: 10px;
-    }
+  }
 }
+
 .items-container {
-    display: grid;
-    grid-template-columns: auto;
-    border: 1px solid rgba(128, 128, 128, 0.3);
-    border-radius: 10px;
-    padding: 40px;
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  border-radius: 10px;
+  padding: 20px;
 }
+
+.items-container > div:first-child {
+  margin-bottom: 10px; 
+}
+
 .items-card-content {
-    display: grid;
-    grid-template-columns: auto;
-    row-gap: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
+
+.timer-container {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.timer-label {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.timer-time {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #000;
+}
+
 .purchase-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    border: 1px solid rgba(128, 128, 128, 0.3);
-    border-radius: 10px;
-    padding: 40px;
-    height: fit-content;
-}
-
-.purchase-button {
-    width: 100%;
-    color: #ffffff; /* Asegura que el texto del botón sea blanco */
-    background-color: #000000;
-    height: 36px;
-    border-radius: 30px;
-    cursor: pointer;
-    outline: none;
-    border: 1px solid gray;
-    transition: transform 0.3s ease-in-out;
-    display: flex; /* Añadido para que el enlace ocupe todo el botón */
-    align-items: center; /* Centrar verticalmente */
-    justify-content: center; /* Centrar horizontalmente */
-    text-align: center; /* Centrar texto */
-    text-decoration: none; /* Sin subrayado */
-}
-
-.purchase-button:hover {
-    background-color: #727171;
-    color: #ffffff;
-    transform: scale(0.95);
-}
-
-.purchase-button a {
-    color: #ffffff; /* Texto blanco */
-    text-decoration: none; /* Sin subrayado */
-    width: 100%; /* Para que el enlace ocupe todo el botón */
-    height: 100%; /* Para que el enlace ocupe todo el botón */
-    display: flex; /* Para centrar el texto */
-    align-items: center; /* Para centrar el texto verticalmente */
-    justify-content: center; /* Para centrar el texto horizontalmente */
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .total-price {
-    display: flex;
-    justify-content: space-evenly;
-    font-size: 1em;
-    padding: 20px 0px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2em;
+}
+
+.purchase-button {
+  width: 100%;
+  color: #ffffff;
+  background-color: #000000;
+  height: 50px;
+  border-radius: 30px;
+  cursor: pointer;
+  border: none;
+  font-size: 1em;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.purchase-button:hover {
+  background-color: #333;
+}
+
+/* Estilos para mobile */
+@media (max-width: 767px) {
+  .container {
+    padding: 10px;
+  }
+  
+  .items-container,
+  .purchase-container {
+    padding: 15px;
+  }
+}
+
+/* Estilos cuando el temporizador está en rojo */
+.timer-container.red {
+  border: 2px solid #ff4d4d;
+  background-color: #fff0f0;
+}
+
+.timer-container.red .timer-time {
+  color: #ff0000;
+}
+
+.empty-card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 100px 0;
 }

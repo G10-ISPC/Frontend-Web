@@ -1,37 +1,47 @@
-<!-- TEPLATE DONDE SE VE TODO EL CARRITO Y EL BOTON PARA FINALIZAR LA COMPRA -->
 <div class="container">
+  @if (count()) {
+    <div class="header">
+      <h1>CARRITO DE COMPRAS</h1>
+    </div>
 
-    @if (count()) {
-        <div><h1>CARRITO DE COMPRAS</h1></div>
-                        <!-- CARDS CONTAINER -->
-        <main class="main">
-            <div class="items-container shadow">
-                <div>
-                    <strong>{{count() === 1 ? count() + " producto" : count() + " productos"}}</strong>
-                </div>  
-                <div class="items-card-content">
-                    @for (item of items(); track item.id_producto) {
-                        <app-cart-item-card
-                            [item]="item"
-                            (itemQuantityUpdate)="onItemQuantityUpdate($event, item.id_producto)"
-                            (removeItem)="onRemoveItem(item.id_producto)"
-                                                
-                        ></app-cart-item-card>
-                    }
-                </div>
-            </div>
-      <!-- PAGAR -->
-      <div class="purchase-container shadow">
-        <button class="purchase-button" (click)="finalizarCompra()">
-          <strong>FINALIZAR COMPRA</strong>
-        </button>
-        <div class="total-price">
-          <div><strong>Total</strong></div>
-          <div><strong>${{ total() }}</strong></div>
+    <!-- CARDS CONTAINER -->
+    <main class="main">
+      <div class="items-container shadow">
+        <div>
+          <strong>{{count() === 1 ? count() + " producto" : count() + " productos"}}</strong>
+        </div>
+        <div class="items-card-content">
+          @for (item of items(); track item.id_producto) {
+            <app-cart-item-card 
+              [item]="item" 
+              (itemQuantityUpdate)="onItemQuantityUpdate($event, item.id_producto)"
+              (removeItem)="onRemoveItem(item.id_producto)">
+            </app-cart-item-card>
+          }
+        </div>
+      </div>
+
+      <div class="right-column">
+        <div class="timer-container shadow" [ngClass]="{ 'red': tiempoRestante() <= 60  * 1000 }">
+          <div class="timer-label">Tu carrito se vacia en:</div>
+          <div class="timer-time">{{ formatTiempo(tiempoRestante()) }}</div>
+        </div>
+
+        <!-- PAGAR -->
+        <div class="purchase-container shadow">
+          <div class="total-price">
+            <div><strong>Total</strong></div>
+            <div><strong>${{ total() }}</strong></div>
+          </div>
+          <button class="purchase-button" (click)="finalizarCompra()">
+            <strong>FINALIZAR COMPRA</strong>
+          </button>
         </div>
       </div>
     </main>
   } @else {
-    <div class="empty-card"><h1>El carrito está vacío</h1></div>
+    <div class="empty-card">
+      <h1>El carrito está vacío</h1>
+    </div>
   }
 </div>
