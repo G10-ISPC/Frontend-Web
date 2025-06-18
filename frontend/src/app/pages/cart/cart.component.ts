@@ -1,13 +1,14 @@
 import { Component, computed } from '@angular/core';
 import { CartService } from '../../core/services/cart.service';
-import { CartItemCardComponent } from './components/cart-item-card/cart-item-card.component';
+import { CartItemCardComponent} from './components/cart-item-card/cart-item-card.component';
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';  
 import { LogService } from '../../core/services/log.service';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CartItemCardComponent],
+  imports: [CartItemCardComponent, CommonModule],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],  
 })
@@ -15,6 +16,7 @@ export class CartComponent {
   count = computed(() => this.cartService.cart().count);
   total = computed(() => this.cartService.cart().total);
   items = computed(() => this.cartService.cart().items);
+  tiempoRestante = computed(() => this.cartService.remainingTime());
   authService: any;
   
   constructor(
@@ -22,6 +24,18 @@ export class CartComponent {
     private http: HttpClient,
     private logService: LogService  
   ) {}
+
+    formatTiempo(ms: number): string {
+    if (!ms || ms <= 0) return '00:00';
+    const totalSeconds = Math.floor(ms / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${this.pad(minutes)}:${this.pad(seconds)}`;
+  }
+
+  pad(n: number): string {
+    return n < 10 ? '0' + n : n.toString();
+  }
 
   onItemQuantityUpdate(quantity: number, id: string) {
     let increase = true;
