@@ -3,37 +3,38 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Product } from '../interfaces/producto';
 import { map } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductoService {
-  private url = "http://127.0.0.1:8000/api/producto/";
-  apiUrl: any;
+  private apiUrl = `${environment.apiUrl}/producto/`; 
+  // apiUrl: any;
   
   constructor(private http: HttpClient) {}
 
   getData(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.url); 
+    return this.http.get<Product[]>(this.apiUrl); 
   }
 
   deleteData(id: string): Observable<any> {
-    const urldel = `${this.url}${id}/`;
+    const urldel = `${this.apiUrl}${id}/`;
     return this.http.delete(urldel);
   }
 
   createProduct(product: Product | FormData): Observable<any> {
-    return this.http.post(this.url, product);
+    return this.http.post(this.apiUrl, product);
   }
 
   getProducto(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.url).pipe(
+    return this.http.get<Product[]>(this.apiUrl).pipe(
       map(productos => productos.filter(producto => producto.visible)) 
     );
   }
   obtenerCard(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.url).pipe(
+    return this.http.get<Product[]>(this.apiUrl).pipe(
       map(productos => {
         const ids = new Set();
         return productos.map((producto, index) => {
@@ -53,7 +54,7 @@ export class ProductoService {
     );
   }
   updateProduct(id: number, product: Product | FormData): Observable<Product> {
-    return this.http.put<Product>(`${this.url}${id}/`, product);
+    return this.http.put<Product>(`${this.apiUrl}${id}/`, product);
   }
 }
    
