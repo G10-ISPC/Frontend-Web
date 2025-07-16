@@ -6,12 +6,13 @@ import { LoginResponse } from '../interfaces/request-response';
 import { LoginRequest } from '../interfaces/request-response';
 import { usuario } from '../interfaces/usuario';
 import { Router, RouterLink } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LogService {
-  private apiUrl = 'api/login/';
+  private apiUrl = `${environment.apiUrl}/login/`; 
   private readonly TOKEN_KEY = "token";
   private readonly isUserLogin$ = new BehaviorSubject<boolean>(
     Boolean(localStorage.getItem(this.TOKEN_KEY))
