@@ -23,7 +23,8 @@
             "assets": [
               "src/logo1.ico",
               "src/assets",
-              "src/assets/img"
+              "src/assets/img",
+              "src/static.json"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.css",
