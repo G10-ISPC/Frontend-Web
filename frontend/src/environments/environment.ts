@@ -1,4 +1,5 @@
+// environment.ts (desarrollo)
 export const environment = {
   production: false,
-  apiUrl: 'https://ricco-backend.onrender.com/api' // o tu URL real de producción
+  apiUrl: 'http://127.0.0.1:8000/api'  // backend local en desarrollo
 };
