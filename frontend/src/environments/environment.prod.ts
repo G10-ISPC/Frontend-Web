@@ -1,4 +1,5 @@
+// environment.prod.ts (producción)
 export const environment = {
   production: true,
-  apiUrl: 'https://tu-backend.onrender.com/api'  // ← reemplazalo cuando tengas el backend subido
+  apiUrl: 'https://ricco-backend.onrender.com/api'  // tu backend real en producción
 };
