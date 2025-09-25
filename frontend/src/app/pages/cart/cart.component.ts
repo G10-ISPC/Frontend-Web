@@ -78,19 +78,28 @@ export class CartComponent {
     this.http.post<any>(`${environment.apiUrl}/crear-pagos/`, compraData).subscribe(
       (response) => {
        
+        // if (response.init_point) {
+        //   // 🌐 3. Abrir Mercado Pago en otra pestaña
+        // // window.open(response.init_point, '_blank');
+        // window.location.href = response.init_point;
+        //   // 🧹 1. Vaciar carrito
+        // this.cartService.clearCart();
+
+        // // 🧭 2. Redirigir a historial de compras
+        // window.location.href = 'http://localhost:4200/historialdecompras';
+
+        
+        //   }
+      //Lo nuevo para mercado pago  
         if (response.init_point) {
-          // 🌐 3. Abrir Mercado Pago en otra pestaña
-        // window.open(response.init_point, '_blank');
-        window.location.href = response.init_point;
-          // 🧹 1. Vaciar carrito
+  // 1️⃣ Vaciar carrito antes de redirigir
         this.cartService.clearCart();
 
-        // 🧭 2. Redirigir a historial de compras
-        window.location.href = 'http://localhost:4200/historialdecompras';
+  // 2️⃣ Abrir Mercado Pago en la misma pestaña
+        window.location.href = response.init_point;
 
-        
-          }
-        
+  // 🚫 NO pongas otra redirección acá, porque sobrescribiría la anterior
+}
       },
       (error) => {
         console.error('Error al crear el pago', error);
