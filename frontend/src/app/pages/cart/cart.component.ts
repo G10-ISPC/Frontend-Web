@@ -4,6 +4,7 @@ import { CartItemCardComponent} from './components/cart-item-card/cart-item-card
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';  
 import { LogService } from '../../core/services/log.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-cart',
@@ -73,13 +74,14 @@ export class CartComponent {
         nombre_producto: item.nombre
       }))
     };
-
-    this.http.post<any>('/api/crear-pago/', compraData).subscribe(
+    //this.http.post<any>('/api/crear-pago/', compraData)
+    this.http.post<any>(`${environment.apiUrl}/crear-pagos/`, compraData).subscribe(
       (response) => {
        
         if (response.init_point) {
           // 🌐 3. Abrir Mercado Pago en otra pestaña
-        window.open(response.init_point, '_blank');
+        // window.open(response.init_point, '_blank');
+        window.location.href = response.init_point;
           // 🧹 1. Vaciar carrito
         this.cartService.clearCart();
 
